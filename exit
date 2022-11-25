@@ -1,0 +1,41 @@
+[33mcommit 5bba308dc39b6ea80f6fd0c2b16491aa4db44025[m[33m ([m[1;36mHEAD -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m)[m
+Author: Park Hyunggoo <hit135@naver.com>
+Date:   Fri Jan 27 00:05:00 2023 +0900
+
+    웹 프로그래밍 기초(수정 요망)
+
+[33mcommit bd9215a731b3372fc2414abd717af622e61190d7[m
+Author: Park Hyunggoo <hit135@naver.com>
+Date:   Wed Dec 14 23:10:19 2022 +0900
+
+    비동기 ajax DB통신(서블릿, JSON)
+
+[33mcommit 25e975850d46468d2dd01fe949a1d630777c4d40[m
+Author: Park Hyunggoo <hit135@naver.com>
+Date:   Sun Dec 4 23:35:02 2022 +0900
+
+    JSP로 CRUD와 게시판 구현 (로그인, 페이징, 검색까지 구현)
+
+[33mcommit 9dcb39b8c3383904b35b12c3d728002935d769c7[m
+Author: Park Hyunggoo <hit135@naver.com>
+Date:   Wed Nov 23 23:27:16 2022 +0900
+
+    JSP에서 범위(Scope) >> Page, Request, Session, Aplication
+
+[33mcommit f38eceaa5bdc68e841218d33465958184705486d[m
+Author: Park Hyunggoo <hit135@naver.com>
+Date:   Wed Nov 23 23:25:50 2022 +0900
+
+    JSTL(JavaServer Pages Standard Tag Library)
+
+[33mcommit 9dc451e167f4cb3d43c59b422a6ebb6c60344974[m
+Author: Park Hyunggoo <hit135@naver.com>
+Date:   Tue Nov 22 22:00:26 2022 +0900
+
+    EL(Expression Language >> 표현언어)
+
+[33mcommit 11b4eb0189c75d1a1541e423436cfda29e8fe675[m
+Author: Park Hyunggoo <hit135@naver.com>
+Date:   Mon Nov 21 21:52:09 2022 +0900
+
+    웹 프로그래밍 기초, 서블릿
