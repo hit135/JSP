@@ -1,0 +1,807 @@
+*{
+    font-family: 'Noto Sans KR', sans-serif;
+    list-style: none;
+    text-decoration: none;
+    margin: 0 auto;
+    padding: 0;
+    color: black;
+}
+
+.intro_bg{
+    width: 100%;
+    height: 720px;
+    background-color: lightblue;
+    /* background-color: black; */
+}
+
+.header{
+    width: 1280px;
+    height: 86px;
+    background-color: red;
+    display: flex;
+}
+
+.nav{
+    display: flex;
+}
+
+.nav > li{
+    margin-left: 84px;
+    height: 150px;
+}
+
+.nav > li > a{
+    color: #fff;
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.searchArea{
+    width: 320px;
+    height: 40px;
+    background-color: green;
+    margin-top: 30px;
+}
+.nav{
+    margin-top: 30px;
+}
+
+/* a태그에 마우스 올리면 색상변경 */
+.nav a:hover {
+    color: lime;
+} 
+
+/* dropDown */
+.nav li ul{
+    display: none;
+    opacity: 0;
+    margin-left: 10px;
+}
+.nav li:hover ul{
+    animation: fade-in .5s;
+    animation-fill-mode: forwards;
+    display: block;
+    position: relative;
+}
+.nav li:hover ul > li{
+	width:70px;
+	/* background-color: red; */
+	margin-left : 7px;
+	position: absolute;
+	left: -10px;
+}
+.nav li:hover ul > li:nth-child(3){
+	top:60px;
+}
+.nav li:hover ul > li:nth-child(2){
+	top:30px;
+}
+@keyframes fade-in {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+}
+.nav a{
+    color: white;
+    font-size: 18px;
+    margin-top: 5px;
+}
+
+
+.searchArea > form > input{
+    width: 250px;
+    height: 25px;
+    border: none;
+    /* 클릭했을경우 외곽선 없애기  */
+    outline: none; 
+    background: rgba(0, 0, 0, 1);
+    border-radius: 15px;
+    color: #fff;
+    padding-left: 15px;
+}
+
+
+.searchArea > form > span{
+    width: 50px;
+    color: #fff;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.intro_text{
+    width: 100%;
+    text-align: center;
+    background-color: violet;
+    position: relative;
+    top: 300px;
+}
+
+.intro_text > h1, .intro_text > h4{
+    color: #fff;
+}
+
+.intro_bg{
+    /* no-repeat 크기에 상관없이 무조건 한장만 나오게 하려고  */
+    background-image: url("../images/img102.jpg");
+    background-size: 100% 718px;
+
+    /* 어둡게하기 방법1 (낮을수록 어두움(크롬,엣지는 먹음 / 익스플로러에서는 안먹음)) */
+    /* filter: brightness(70%); */
+
+    /* 어둡게하기 방법2-1  */
+    opacity: 0.8;
+}
+/* 어둡게하기 방법2-2 (해당 div 밑에 있는(감싸고있는) div에 background-color:black으로 주기 */
+#wrap{
+    background-color: black;
+}
+
+
+.header, .nav, .searchArea, .intro_text{
+    background: transparent;
+}
+/* ==========================================1차 intro_bg end */
+
+
+.sub_title{
+    width: 1280px;
+    height: 130px;
+    background-color: tomato;
+    display: flex;
+    position: relative;
+    top: -65px;
+}
+
+.sub_title > li > div {
+    background-color: violet;
+    width: 315px;
+    height: 120px;
+    margin-top: 5px;
+    text-align: center;
+}
+
+.sub_title > li > div > h2 {
+    padding-top: 30px;
+    /* margin-top: 30px; */
+}
+
+.sub_title > li > div{
+    background-color: #fff;
+}
+
+.sub_title{
+    background-color: #fff;
+}
+
+.sub_title{
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.5);
+}
+
+.sub_title > li:not(li:last-child) > div {
+    border-right: 1px solid gray;
+}
+/* ==========================================2차 sub_title_div end */
+
+.main_text0{
+    width: 100%;
+    height: 620px;
+    background-color: lightblue;
+    margin-top: -130px;
+}
+
+.main_text0 > h1 {
+    text-align: center;
+    padding-top: 100px;
+    font-size: 60px;
+}
+
+.main_text0 > p{
+    text-align: center;
+    margin-top: 10px;
+    font-size: 25px;
+}
+
+.main_text0 > ul {
+    display: flex;
+    width: 1280px;
+    height: 302px;
+    background-color: lightcoral;
+    padding-top: 30px;
+}
+
+.icons > li {
+    background-color: lightgreen;
+    width: 400px;
+    text-align: center;
+}
+
+.main_text0{
+    background-color: #f0f3f5;
+}
+
+.main_text0 > ul{
+    background-color: transparent;
+}
+
+.icons > li {
+    background-color: #8ce7f7;
+}
+
+.contents1_bold > p {
+    font-size: 25px;
+    font-weight: bold;
+}
+
+.more{
+    background-color: mediumblue;
+    width: 100px;
+    height: 30px; 
+    color: #fff;
+    padding-top: 5px;
+    margin: 25px auto;
+}
+/*=========================================3차 main_text0 e  */
+
+.main_text1{
+    width: 100%;
+    height: 700px;
+    background-color: lightblue;
+}
+
+.main_text1 > h1 {
+    text-align: center;
+    font-size: 60px;
+    padding-top: 30px;
+}
+
+.contents2 > p {
+    text-align: center;
+    font-size: 25px;
+    margin-top: 20px;
+}
+
+.service{
+    display: flex;
+    background-color: lightsalmon;
+    width: 1280px;
+    height: 440px;
+    margin-top: 20px;
+}
+
+.service > div > img {
+    width: 640px;
+    height: 440px;
+}
+
+.service > div:last-child{
+    background-color: lightyellow;
+    padding-top:20px;
+    padding-left: 50px;
+    padding-right: 50px;
+    text-align: justify;
+}
+
+.main_text1{
+    background-color: #fff;
+}
+/* ====================================4차 main_text1 e */
+
+.main_text2 > ul{
+    width: 100%;
+    height: 500px;
+    background-color: mediumaquamarine;
+    display: flex;
+}
+
+/* 50%로 두개 구역 나누기 */
+.main_text2 > ul > li {
+    width: 50%;
+}
+
+/* 좌측 확인 */
+.main_text2 > ul > li:first-child {
+    background-color: lightgoldenrodyellow;
+}
+
+/* 우측확인 */
+.main_text2 > ul > li:last-child {
+    background-color: lightpink;
+}
+
+.main_text2 > ul > li:first-child > div{
+    width: 100%;
+    height: 500px;
+    background-color: lime; 
+    text-align: center;
+}
+
+.main_text2 > ul > li:last-child > div{
+    width: 100%;
+    height: 500px;
+    background-color: blueviolet;
+    text-align: center;
+}
+
+.main_text2 > ul > li > div > h1{
+    padding-top: 160px;
+}
+
+.main_text2 h1, .main_text2 p, .more2{
+    color: #fff;
+    padding-bottom: 20px
+}
+
+.more2{
+    border: 1px solid #fff;
+    width: 150px;
+    height: 20px;
+}
+
+.more2 > p{
+    padding-top: 7px;
+    cursor: pointer;
+}
+
+.last_bg1{
+    background-image: url("../images/img1.jpg");
+    background-size: 100% 500px;
+}
+/* 마우스를 올렸을때 불투명하게 처리 */
+.last_bg1:hover{
+    opacity: 0.7;
+}
+.last_bg2{
+    background-image: url("../images/img2.jpg");
+    background-size: 100% 500px;
+}
+.last_bg2:hover{
+    opacity: 0.7;
+    
+}
+/* 배경을 검정으로 만들어서 검정으로 불투명하게 처리하기 */
+.main_text2 > ul > li{
+    background-color: black !important;
+}
+
+
+/*home, about, service, content 연결하기  */
+/* ===================================5차 작업 main_text2 e */
+
+/* footer 작업 */
+/* 
+.div_footer{
+    width: 100%;
+    height: 150px;
+    background-color:lightslategrey;
+    display: flex;
+}
+.div_footer > div {
+    padding-top:30px;
+}
+.div_footer > div:first-child{
+    flex: 4;
+    background-color: lime;
+}
+.div_footer > div:last-child{
+    flex: 6;
+    background-color: magenta;
+}
+.div_footer > div:first-child{
+    text-align: center;
+    font-weight: bold;
+}
+.div_footer > div:first-child{
+    background-color: lightslategray;
+}
+.div_footer > div:last-child{
+    background-color: lightslategray;
+} 
+*/
+/* ===================================6차 작업 footer분리하기  */
+
+
+
+/* 반응형 s */
+
+/* 화면 너비가 0 부터 1220px 일때 */   
+/* 1190 */
+@media (max-width:1220px){                          
+     /* 
+        width: 95% -> 좌우에 여백을 주기 위해서 , 
+            %로 변경하여 스코롤바가 생기지 않게 하기 위함 
+        1220 변경되는 위치 확인 
+    */
+    #wrap {width: 95%;}   
+
+    /*header 전체 크기잡기  */
+    .header{
+        width: 100%;
+    }       
+
+    /* nav 간격조절 */
+    .nav > li{
+        margin-left: 30px;
+    }
+
+    /* 전체크기잡기 */
+    .sub_title{
+        width: 95%;
+        background-color: lightgreen;
+    }
+
+    /* dliv가 잡은 영역 안에 들어오게 크기조절 */
+    .sub_title > li > div {
+        width: 250px;
+    }
+
+    .sub_title{
+        background-color: #fff;
+    }
+
+    /* icons 전체 크기 잡기 */
+    .main_text0 > ul{
+        width: 95%;
+        background-color: chartreuse;
+    }
+
+    /* li 크기 줄이기 */
+    .icons > li {
+        width: 340px;
+    }
+
+    .main_text0 > ul{
+        background-color: white;
+    }
+
+    /* service 전체 크기 잡기 */
+    .service{
+        width: 95%;
+    }
+}    
+ 
+
+/* #input_search작업 후 하기 */
+#menuicon, .header_icon{
+    display: none;
+}
+
+/* 화면 너비가 0 부터 930px 일때 ( 태블릿 ) */
+/* 900 */
+@media (max-width:930px){
+    
+    /* (nav 없어지는 지점 확인) 좌측 bar로 nav 만들기위해서 */
+    .nav{
+        display: none;
+    }
+    
+    .searchArea{
+        margin: 0;
+    }
+    
+    #input_search{
+        width: 200px;
+        margin-top: 20px;
+        margin-left: 20px;
+    }
+
+    /* home.html에 checkbox태그 넣고 
+        보이는거 확인하고 
+        큰화면일때는 안보여야 하니까
+        media 위에 none 처리하기
+            #menuicon, .header_icon{
+                display: none;
+            }
+    */
+   
+    /* 이젠 쓸꺼니까 보이게 하기 */
+   .header_icon{
+        display: block;
+    }
+
+    /* 좌측 네비바 만들기 */
+    .header_icon{
+        width: 300px;
+        height: 100%;
+        background-color: #222;
+        position: fixed;
+        top: 0;
+        z-index:1 ;
+        /* 여기까지 확인하고 
+         right -300px으로 밀어넣기 */
+        right:-300px;
+                                              
+    }
+
+    /* 라벨 영역잡기  */
+    input[id="menuicon"] + label{
+        /* 라벨은 인라인 요소라서 영역(width)을 가질수
+            없다 따라서 displaly:block으로 변경 */
+        display: block;
+        width: 30px;
+        height: 20px;
+        background-color: lightgreen;
+        position: fixed;
+        right: 30px;
+        top: 25px;
+        cursor: pointer;
+    }   
+
+    /* span 태그에 가로바 설정 */
+    input[id="menuicon"] + label > span{
+        /* span태그도 인라인 이라서 영역을 가질수 없다
+         따라서 width, height 값을 가지기 위해서
+         display:block로 변경 */
+        display: block;
+        /* 가로바 생성 */
+        width: 100%;
+        /* 가로바 두께 */
+        height: 4px;
+        background:#fff;
+    }
+
+      /* span 3줄 위치 설정*/
+    input[id="menuicon"] + label span:nth-child(1){
+        position: absolute;
+        top: 0;
+    }
+    input[id="menuicon"] + label span:nth-child(2){
+        position: absolute;
+                                                                       top: 50%;
+        top: calc( 50% - 2px);
+    }
+    input[id="menuicon"] + label span:nth-child(3){
+        position: absolute;
+        bottom: 0;
+    } 
+
+    /* 클릭 되었을때 X 표 변경하기 
+        라벨에 input테그를 걸었기때문에 라벨 클릭하면 
+         input 태그의 checkbox가 체크된다 따라서 
+          input 태그가 체크된 상황이면서 라벨 테그 하위에 
+          span 태그 첫번째 요소를 선택하여 애니메이션을 
+          주려한다.
+    */
+    input[id="menuicon"]:checked + label span:nth-child(1){
+        top:50%;
+        transform: rotate(45deg);
+    }
+    
+    input[id="menuicon"]:checked + label span:nth-child(2){
+        /* X 를 만들기 위해서 가운데는 안보이게 처리 */
+            opacity: 0;
+    }
+    
+    input[id="menuicon"]:checked + label span:nth-child(3){
+            top: 50%;
+            transform: rotate(-45deg);
+    }
+    
+    /* X 를 만들면 우측 nav 창이 나오도록 하기 */
+    input[id="menuicon"]:checked + label + div{
+            right: 0;
+    }
+
+    /* 우측 네비바 때문에 X표가 안보이므로 z-index로 올리기 */
+    input[id="menuicon"] + label{
+        z-index: 2;
+        background-color:transparent
+    }
+
+    /*span 태그 모서리 둥글게하고 애니메이션 주기  */
+    input[id="menuicon"] + label span{
+        border-radius: 30px;
+        transition: all .35s;
+    }
+
+    /* 우측 네비바 애니메이션 주기 */
+    .header_icon{
+        transition: all .35s;
+    }
+
+    /* 슬라이드 메뉴 영역 */
+    .menu {
+        width: 250px;
+        height: 500px;
+        background-color:lightsalmon;
+        margin: 100px auto;
+    }
+
+    /* 슬라이드메뉴 li 위치조정 */
+    .menu > li {
+        padding-top:20px;
+        padding-left: 40px;
+    }
+
+    .menu > li > a{
+        /* visibility:visible; */
+        color: #fff;
+    }
+    .menu {
+        background-color: transparent;
+    }
+    /* 슬라이드 e */
+
+    .sub_title{
+        width: 95%;
+        height: 260px;
+        background-color: tomato;
+        /*.sub_title > li를 inline-block주기위해서   */
+        display: block;
+    }
+
+    .sub_title > li{
+        display: inline-block;
+        width: 350px;
+    }
+
+    .sub_title{
+        /*메인 이미지랑 겹쳐지지 않게 하기 위해서  */
+        top: 0px;
+        /* li 중앙정렬을 위해서  */
+        text-align: center;
+        /* 다했으니 색 변경 */
+         background-color: #fff ;
+    }
+
+    .sub_title > li > div{
+        border-bottom: 1px solid black;
+        border-right: 1px solid black;
+        box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.5);
+    }
+
+    /* about 글자 찡긴거 처리 */
+    .main_text0 > h1{
+        padding-top: 150px;
+    } 
+
+    .icons > li {
+        width: 230px;
+    }
+
+    /* service 부분을 위아래로 정렬하기 위해서 block으로 변경하기 위해서 크기 확인 */
+    .main_text1{
+        height: 1100px;
+        background-color: lightblue;
+        margin-top: 20px;
+    }
+
+    .service{
+        display: block;
+        width: 100%;
+        height: 880px;
+        background-color: lightgreen;
+    }
+
+    /*service img 크기 */
+    .service > div:first-child > img{
+        width: 100%;
+    }  
+
+    /* service 텍스트부분 영역 */
+    .contents3{
+        height: 440px;
+    }
+
+    /* 바탕색변경 */
+    .main_text1, .service{
+        background-color: white;
+    }
+}
+
+
+/* 화면 너비가 0 부터 550px 일때 ( 폰  ) */
+/* 525 */
+@media (max-width:550px){
+    /* #wrap {width: 100%;}   */
+
+    .sub_title{
+        /* sub_title 영역확인을위해서 bg-color부터 찍어보기 */
+        background-color: tomato;
+        height: 510px;
+        display: block;
+    }
+
+    /* ul 크기에 맞게 키우기 */
+    .sub_title > li > div{
+        width: 300px;
+    }
+    
+    .sub_title{
+        background-color: #fff ;
+    }
+
+    /* icon 영역 크기잡기 */
+    .main_text0{
+        height: 1220px;
+        background-color: yellowgreen;
+    }
+
+    /* ul 영역 잡기 */
+    .main_text0 > ul {
+        display: block;
+        height: 900px;
+        background-color: lightpink;
+    }
+
+    /* 폭에 맞게 크기 조정 */
+    .main_text0 > ul > li{
+        width: 400px;
+    }
+
+    .sub_title, .main_text0, .main_text0 > ul{
+        background-color: white;
+    }
+
+    /*  flex를 block으로 변환 */
+    .main_text2 > ul {
+        display: block;
+        height: 1000px;
+    }
+    /* li 크기 조정해서 이미지 크기 키우기 */
+    .main_text2 > ul > li{
+        width: 100%;
+    }
+
+     /* footer 글자 짤리는거 조절 */
+     .div_footer {
+        height: 200px !important;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

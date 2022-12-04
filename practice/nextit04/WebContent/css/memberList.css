@@ -1,0 +1,188 @@
+
+/* ===================================1차 header 작업 e */
+
+.intro_bg{
+    width: 100%;
+    height: 700px;
+    background-color: sienna;
+}
+.intro_text{
+    width: 100%;
+    text-align: center;
+    position: relative;
+    top: 300px;
+}
+.intro_text > h1, .intro_text > h4 {
+    color: #fff;
+}
+.intro_bg{
+    background-image: url("../images/img102.jpg");
+    background-size: 100% 700px;
+}
+
+/* =========================2차 intro_bg e */
+/* 전체영역잡기 */
+.contents{
+    width: 100%;
+    /* height: 700px; */
+    background-color: lightslategrey;
+}
+/* 사용할 영역잡기 */
+.content01{
+    width: 1280px;
+    /* height: 700px; */
+    height: 100%;
+    background-color: lightgreen;
+}
+.content01_h1{
+    width: 100%;
+    height: 100px;
+    background-color: lightpink;
+    text-align: center;
+}
+.content01_h1 > h1{
+    padding-top: 30px;
+}
+/* 테이블 영역잡기 */
+#div_table{
+    width: 1280px;
+    /* height: 500px; */
+    height: 100%;
+    background-color: lightsalmon;
+}
+ 
+/* list */
+#div_table > table{
+    width: 80%;
+    height: 500px;
+    background-color: lightskyblue;
+}
+ 
+th, td {
+    text-align: center;
+    border-bottom: 2px solid lightslategrey;
+}
+.div_paging{
+    width: 100%;
+    /* height: 100px; */
+    height: 100%;
+    background-color: lightcyan;
+}
+.pagination{
+    width: 300px;
+    /* height: 30px; */
+    height: 100%;
+    background-color: lightpink;
+    text-align: center;
+    padding-top: 20px;
+    display: flex;
+}
+.pagination > li{
+	width: 20px;
+}
+.div_board_write{
+    width: 100px;
+    height: 50px;
+    background-color: limegreen;
+    position: relative;
+    left: 510px;
+    top: -30px;
+} 
+
+.div_board_write > input{
+    padding: 5px;
+    border: none;
+    border-radius: 5px;
+}
+.contents, .content01, .content01_h1, #div_table, #div_table > table,
+     .div_paging, .pagination, .div_board_write{
+    background-color: #fff;
+}
+
+
+/* ===============================================3차 contents 작업 e */
+/* 버튼클릭 액션 */
+.div_board_write > input:active{
+    transform:translate(2px,2px);
+}
+
+/* 페이징  CSS처리 */
+.pagination a{
+   padding-left:7px
+}
+.pagination a:hover {
+   color: lightskyblue;
+   font-weight:bold;
+}
+
+/*페이징 관련 현재페이지 추가   */
+.curPage_a{
+	color: lightskyblue;
+   	font-weight:bold;
+}
+
+/* 페이징목록건수 */
+.rowSizePerPage{
+    text-align: right;
+    margin-right: 150px;
+    margin-bottom: 20px;
+}
+
+ /* 검색폼 만들기1 */
+.div_search{
+	width: 1280px;
+	height: 50px;
+	/* background-color: lightBlue; */
+	margin-bottom: 10px;
+}
+/* 검색폼 만들기2 */
+.div_search form{
+	width: 1024px;
+	height: 100%;
+	background-color: lightgray;
+}
+/* 검색폼 만들기3 */
+.div_search div{
+	text-align: center;
+	padding-top: 15px;
+}
+/* 검색폼 만들기4 */
+.div_search input{
+	outline: none;
+}
+#div_table a:first-child{
+	 color: gray;
+}
+#div_table a:hover{
+     color: orange;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

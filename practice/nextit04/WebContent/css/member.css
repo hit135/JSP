@@ -1,0 +1,52 @@
+*{
+    margin: 0 auto;
+    padding: 0;
+}
+body{
+    height: 100vh;
+    background-color: red;
+    text-align: center;
+}
+.container{
+    position: relative;
+    top: 50%;
+    width: 400px;
+    background-color: lightskyblue;
+}
+.container > h3, .alert-success {
+    color: white;
+}
+
+body{
+    background: url("../images/img1.jpg") no-repeat center;
+    background-size: cover;
+}
+body::before{
+    content: "";
+    position: absolute;
+    top: 0; right: 0; bottom: 0; left: 0;
+    background-color: rgba(0, 0, 0, 0.7);
+}
+body, .container{
+    background-color: transparent;
+}
+p {
+    color:white;
+}
+
+.btn-area{
+    width: 420px;
+}
+.container button{
+    width: 100%;
+    height: 50px;
+    color: #fff;
+    font-size: 20px;
+    border: none;
+    border-radius: 25px;
+    background-color: #166cea;
+    margin-top: 30px;
+}
+.container button:active{
+	color: gray;
+}

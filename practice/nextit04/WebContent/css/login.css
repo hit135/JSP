@@ -1,0 +1,144 @@
+*{
+    margin: 0 auto;
+    padding: 0;
+}
+body{
+    height: 100vh;
+    background-color: red;
+    text-align: center;
+}
+
+.login_form{
+    position: relative;
+    top: 50%;
+    width: 400px;
+    background-color: lightskyblue;
+}
+
+.login_form > h1 {
+    color: white;
+}
+
+.int-area{
+    width: 400px;
+    background-color: lightsalmon;
+}
+
+.int-area input{
+	width: 100%;
+	padding: 40px 10px 10px;
+	border: none;
+	border-bottom: 1px solid #999;
+	font-size: 18px;
+	opacity:0.4;
+}
+
+.int-area input:focus{
+    outline:none; 
+}
+
+.int-area > label{
+    font-size: 18px;
+    color: white;
+}
+
+.login_form label[for="memId"]{
+    position: absolute;
+    top: 50px;
+    left: 10px;
+}
+
+.login_form label[for="memPass"]{
+    position: absolute;
+    top: 120px;
+    left: 10px;
+}
+
+.btn-area > button{
+    width: 420px;
+    height: 50px;
+    color: #fff;
+    font-size: 20px;
+    border: none;
+    border-radius: 25px;
+    background-color: #166cea;
+    margin-top: 10px;
+    padding: 0 10px 0;
+}
+.div_rememberMe{
+	color:white;
+}
+
+/* join, forgotpw  */
+.caption_ul > li{
+    list-style: none;
+    font-size: 20px;
+}
+.caption_ul{
+    display: flex;
+    margin-top: 20px;
+}
+.caption a{
+    font-size: 20px;
+    color: #fff;
+    text-decoration: none;
+}
+
+body{
+    background: url("../images/img1.jpg") no-repeat center;
+    background-size: cover;
+}
+body, .login_form, .int-area{
+    background-color: transparent;
+}
+body::before{
+    content: "";
+    position: absolute;
+    top: 0; right: 0; bottom: 0; left: 0;
+    background-color: rgba(0, 0, 0, 0.7);
+}
+
+.int-area input[name='memId']:focus + label{
+    top: 50px;
+    font-size: 13px;
+    color: #166cea;
+}
+
+.int-area input[name='memPass']:focus + label{
+    top: 120px;
+    font-size: 13px;
+    color: #166cea;
+}
+
+.int-area label{
+    transition: all .5s ease;
+}
+
+.int-area input[name='memId']:valid + label{
+    top: 50px;
+    font-size: 13px;
+    color: #166cea;
+}
+.int-area input[name='memPass']:valid + label{
+    top: 120px;
+    font-size: 13px;
+    color: #166cea;
+}
+
+#btn_id:active{
+	color: gray;
+}
+
+.caption_ul a:active{
+    color: gray !important;
+}
+
+.login_form{
+    position: fixed;
+    left: calc( 50% - 200px); 
+}
+
+.int-area label.warning{
+    color: red;
+    animation-duration: .3s ease;
+}

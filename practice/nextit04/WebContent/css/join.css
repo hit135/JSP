@@ -1,0 +1,279 @@
+*{margin: 0 auto; padding: 0;}
+body{
+    height: 100vh;
+    background-color: red;
+    text-align: center;
+}
+.login_form{
+    position: relative;
+    top: 30%;
+    width: 400px;
+}
+.login_form > h1 {
+    color: white;
+    /* text-align: center; */
+}
+.int-area{
+    width: 400px;
+}
+.int-area input{
+    width: 100%;
+    padding: 20px 10px 10px;
+    background-color: transparent;
+    border: none;
+    border-bottom: 1px solid #999;
+    font-size: 18px;
+    color: #fff;
+}
+
+.int-area-select{
+    width: 420px;
+    height: 52px;
+    background-color: transparent;
+    border: none;
+    border-bottom: 1px solid #999;
+    font-size: 18px;
+    color: #fff;
+    text-align: right;
+}
+
+.int-area-select select{
+	width:60%;
+    height: 30px;
+	margin-right: 30px;
+	margin-top:10px;
+	text-align: center;
+	 
+}
+	
+}
+
+.int-area input:focus{
+    outline:none;
+}
+.int-area > label{
+    position: absolute;
+ 
+    font-size: 18px;
+    color: white;
+}
+
+.login_form label[for="memId"]{
+    left: 15px;
+    top: 55px;
+}
+.login_form label[for="memName"]{
+    left: 15px;
+    top: 110px;
+}
+.login_form label[for="memPass"]{
+    left: 15px;
+    top: 160px;
+}
+.login_form label[for="memPassCheck"]{
+    left: 15px;
+    top: 210px;
+}
+.login_form label[for="memZip"]{
+    left: 15px;
+    top: 260px;;
+}
+.login_form label[for="memAdd1"]{
+    left: 15px;
+    top: 310px;;
+}
+.login_form label[for="memAdd2"]{
+    left: 15px;
+    top: 360px;;
+}
+.login_form label[for="memBir"]{
+    left: 15px;
+    top: 410px;;
+}
+.login_form label[for="memMail"]{
+    left: 15px;
+    top: 460px;;
+}
+.login_form label[for="memHp"]{
+    left: 15px;
+    top: 510px;;
+}
+.login_form label[for="memJob"]{
+    left: 15px;
+    top: 560px;;
+}
+.login_form label[for="memHobby"]{
+    left: 15px;
+    top: 610px;;
+}
+
+
+
+
+.btn-area{
+    width: 420px;
+}
+.btn-area > button{
+    width: 100%;
+    height: 50px;
+    color: #fff;
+    font-size: 20px;
+    border: none;
+    border-radius: 25px;
+    background-color: #166cea;
+    margin-top: 30px;
+    
+}
+.caption_ul{
+    display: flex;
+    margin-top: 20px;
+}
+.caption_ul > li{
+    list-style: none;
+    font-size: 20px;
+}
+body{
+    background: url("../images/img1.jpg") no-repeat center;
+    background-size: cover;
+}
+
+body::before{
+    content: "";
+    position: absolute;
+    top: 0; right: 0; bottom: 0; left: 0;
+    background-color: rgba(0, 0, 0, 0.7);
+    z-index: 1;
+}
+.login_form{
+    z-index: 2;
+}
+
+.caption a{
+    font-size: 20px;
+    color: #fff;
+    text-decoration: none;
+}
+ 
+#memId:focus + label{
+    top: 35px;
+    font-size: 13px;
+    color: #166cea;
+}
+#memName:focus + label{
+    top: 90px;
+    font-size: 13px ;
+    color: #166cea;
+}
+#memPass:focus + label{
+    top: 145px;
+    font-size: 13px ;
+    color: #166cea;
+}
+#memPassCheck:focus + label{
+    top: 195px;
+    font-size: 13px ;
+    color: #166cea;
+}
+#memZip:focus + label{
+    top: 245px;
+    font-size: 13px ;
+    color: #166cea;
+}
+#memAdd1:focus + label{
+    top: 295px;
+    font-size: 13px ;
+    color: #166cea;
+}
+#memAdd2:focus + label{
+    top: 345px;
+    font-size: 13px ;
+    color: #166cea;
+}
+#memMail:focus + label{
+    top: 450px;
+    font-size: 13px ;
+    color: #166cea;
+}
+#memHp:focus + label{
+    top: 500px;
+    font-size: 13px ;
+    color: #166cea;
+}
+
+
+.int-area label{
+    transition: all .5s ease;
+}
+ 
+#memId:valid + label{
+    top: 35px;
+    font-size: 13px;
+    color: #166cea;
+}
+#memName:valid + label{
+    top: 90px;
+    font-size: 13px ;
+    color: #166cea;
+}
+#memPass:valid + label{
+    top: 145px;
+    font-size: 13px ;
+    color: #166cea;
+}
+#memPassCheck:valid + label{
+    top: 195px;
+    font-size: 13px ;
+    color: #166cea;
+}
+#memZip:valid + label{
+    top: 245px;
+    font-size: 13px ;
+    color: #166cea;
+}
+#memAdd1:valid + label{
+    top: 295px;
+    font-size: 13px ;
+    color: #166cea;
+}
+#memAdd2:valid + label{
+    top: 345px;
+    font-size: 13px ;
+    color: #166cea;
+}
+#memMail:valid + label{
+    top: 450px;
+    font-size: 13px ;
+    color: #166cea;
+}
+#memHp:valid + label{
+    top: 500px;
+    font-size: 13px ;
+    color: #166cea;
+}
+
+.login_form{
+    position: fixed;
+    left: calc( 50% - 200px);
+    top: calc( 50% - 350px);
+}
+
+.int-area label.warning{
+    color: red;
+    animation-duration: .3s ease;
+    
+}
+#btn_join:active{
+	color: gray;
+}
+
+input{
+	outline: none;
+}
+input[type='date']{
+	text-align:right;
+	color-scheme: dark;
+}
+select{
+	color-scheme: dark;
+} 
+ 
