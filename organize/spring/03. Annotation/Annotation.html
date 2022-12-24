@@ -160,6 +160,188 @@
                 -  @PostMapping, @PutMapping, @PatchMapping, @DeleteMapping 등 도 있다.
         */
 
+        /*
+
+           13. @RequestParam
+
+             13.1) 개요
+
+                -  url 뒤에 붙는 parameter 값을 가져올 때 사용한다.
+
+                -  ?moviename=thepurge 와 같은 쿼리 파라미터를 파싱해준다.
+
+                -  HTTP GET 요청에 대해 매칭되는 request parameter 값이 자동으로 들어간다.
+
+​
+
+
+             13.2) 예시
+
+                   1. @RequestParam("name") String nm
+
+                         - required 조건이 없으면 기본값은 true, 즉 필수 파라미터이다
+
+                        - 파라미터 name가 존재하지 않으면 Exception 발생.       
+
+​
+
+                   2. url 요청 : http://host/chap06/search/internal.do?query=spring&p=3
+
+                       @RequestParam("query") String query, @RequestParam("p") int pageNumber
+
+                         - 첫 번째 파라미터는 query 요청 파라미터의 값을 전달받으며, 두 번째 파라미터인 pageNumber
+
+                            파라미터는 p 파라미터의 값을 전달받는다.
+
+​
+
+                   3. @RequestParam(name="pageNo", required=false) String page_no
+
+                        @RequestParam(value="pageNo", required=false) String page_no
+
+                         - value 와 name 은 같은 기능을 함 
+
+                         - value는 query string으로 받아오는 key값을 뜻하고 뒤에 오는 page_no 변수에 해당 값을 
+
+                            바인딩합니다.
+
+                         - required=false 이면 바인딩 되는 값이 없어도 예외 발생 안함 (page_no는 null.)
+
+​
+
+                   4. @RequestParam("p") int pageNumber
+
+                         - @RequestParam 어노테이션이 적용된 파라미터가 String이 아닐 경우 실제 타입에 따라서 
+
+                               알맞게 타입 변환을 수행한다. 
+
+                         - 예를 들어, pageNumber 파라미터의 타입은 int인데, 이 경우 자동으로 문자열을 int 타입으로 
+
+                               변환해준다. 
+
+​
+
+                   5. @RequestParam(value="userId", defaultValue="ooeunz") String userId
+
+                         - defaultValue는 디폴트 값을 의미합니다.
+
+​
+
+                   6. @RequestParam HashMap<String, Object> paramMap
+
+                        String boNo = paramMap.get("boNo");
+
+                         - 파라미터가 많아지게 되면 일일이 파리미터를 지정하는게 힘들수 있다 이럴때 Map을 사용하여 
+
+                             간단하게 처리 가능하다.
+
+​
+
+        14. @ModelAttribute
+
+             14.1) 개요
+
+                     -  view에서 전달해주는 parameter를 Class(VO/DTO)의 멤버 변수로 binding 해주는 Annotation
+
+                           이다.
+
+                     -  binding 기준은 <input name="id" /> 처럼 어떤 태그의 name값이 해당 Class의 멤버 변수명과 
+
+                           일치해야하고 setmethod명도 일치해야한다.
+
+             14.2) 예시
+
+                   1. @ModelAttribute(value = "memberVO") MemberVO mem
+
+                           - 괄호 안에 지정한 문자열("memberVO")의 의미를 알아야 한다. 이 문자열의 이름으로(이것                       
+
+                                이 객체이다) Model 객체에 자동으로 추가가 되고 따라서 JSP 뷰단으로 안전하게 넘어가게 
+
+                                된다. 즉 mem 객체가 Model 객체에 추가될 때@ModelAttribute("객체명")의 괄호 안에 
+
+                                지정한 문자열의 이름으로 추가된다는 점이다
+
+​
+
+                   2. @ModelAttribute MemberVO mem
+
+                           - 서버로 전송된 데이터가 MemberVO 타입이면 자동으로 mem 객체로 바인딩해준다.
+
+                   3. MemberVO mem
+
+                           - @ModelAttribute는 생략 가능하다.
+
+​
+
+        15. @PathVariable
+
+                -  method parameter 앞에 사용하면서 해당 URL에서 {특정값}을 변수로 받아 올 수 있다.
+
+                -  HTTP 요청에 대해 매핑되는 request parameter 값이 자동으로 Binding 된다.
+
+                -  uri에서 각 구분자에 들어오는 값을 처리해야 할 때 사용한다.
+
+                -  REST API에서 값을 호출할 때 주로 많이 사용한다.
+
+​
+
+        16. @Valid
+
+                -  유효성 검증이 필요한 객체임을 지정한다.
+
+​
+
+        17. @ResponseBody
+
+                -  HttpMessageConverter를 이용하여 JSON 혹은 xml 로 요청에 응답할수 있게 해주는 Annotation
+
+                        이다.
+
+                -  view가 아닌 JSON 형식의 값을 응답할 때 사용하는 Annotation으로 문자열을 리턴하면 그 값을 
+
+                        http response header가 아닌 response body에 들어간다. 
+
+                -  이미 RestController Annotation이 붙어 있다면, 쓸 필요가 없다.
+
+                -  만약 객체를 return하는 경우 JACKSON 라이브러리에 의해 문자열로 변환되어 전송된다.
+
+                -  context에 설정된 viewResolver를 무시한다고 보면된다.
+
+​
+
+        18. @RequestBody
+
+                -  요청이 온 데이터(JSON이나 XML형식)를 바로 Class나 model로 매핑하기 위한 Annotation이다.
+
+                -  POST나 PUT, PATCH로 요청을 받을때에, 요청에서 넘어온 body 값들을 자바 타입으로 파싱해준다.
+
+                -  HTTP POST 요청에 대해 request body에 있는 request message에서 값을 얻어와 매핑한다.
+
+                -  RequestData를 바로 Model이나 클래스로 매핑한다.
+
+                -  이를테면 JSON 이나 XML같은 데이터를 적절한 messageConverter로 읽을 때 사용하거나 POJO 
+
+                        형태의 데이터 전체로 받는 경우에 사용한다.
+
+​
+
+        19. @RequestPart
+
+                -  Request로 온 MultipartFile을 바인딩해준다.
+
+​
+
+        20. @RestController
+
+                -  Spring에서 Controller 중 View로 응답하지 않는, Controller를 의미한다.
+
+                -  @RestController는 @Controller + @ResponseBody 이다 
+
+                -  method의 반환 결과를 JSON 형태로 반환한다. 
+
+​
+        */
+
     </script>
     
 </body>
