@@ -96,7 +96,33 @@
                  - 아래 그림은 ViewResolver으로 InternalResourceViewResolver을 설정하였다.
                 
 
+    4) 스프링 리스너
+
+          4.1) <listener>
+
+                    - 모든 서블릿과 필터에 의해 공유되는 스프링 컨테이너를 생성합니다. 리스너 태그로
+
+                         ContextLoaderListener 클래스를 등록하는데,  이 ContextLoaderListener 클래스가 
+
+                         생성하는 WebApplicationContext는 웹 애플리케이션에서 root 컨텍스트가 되며, 자식은 
+
+                         root가 제공하는 객체(Bean)을 사용할 수 있습니다.
+
 ​
+
+          4.2) ContextLoaderListener
+
+                   - Controller가 공유하는 Bean들을 포함하는 Spring Container를 생성합니다. 서블릿에서 
+
+                         제공하는 ServletContextListener 를 확장하여 만든 리스너로,  웹 애플리케이션이 서블릿
+
+                         컨테이너에 로딩될 때 실행되는 리스너입니다. ContextLoaderListener 는 웹 애플리케이션이 
+
+                         로딩될 때,  WebApplicationContext 를 만드는 역할을 합니다. 이렇게 생성된
+
+                         WebApplicationContext 는 ContextConfigLocation 에서 정의한 Bean 설정 파일을 
+
+                         사용해서 웹 애플리케이션에서 사용할 객체를 관리해주는 역할을 합니다.
 
         */
 
