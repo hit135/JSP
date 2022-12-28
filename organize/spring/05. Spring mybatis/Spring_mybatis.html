@@ -1,0 +1,195 @@
+5) 스프링에 mybatis-spring 적용하기
+
+    pom.xml 에 추가
+
+    <!-- mybatis-->
+    <!-- https://mvnrepository.com/artifact/org.mybatis/mybatis -->
+    <dependency>
+        <groupId>org.mybatis</groupId>
+        <artifactId>mybatis</artifactId>
+        <version>3.5.7</version>
+    </dependency>
+
+    <!-- mybatis-spring 라이브러리 추가하기-->
+    <!-- https://mvnrepository.com/artifact/org.mybatis/mybatis-spring -->
+    <dependency>
+        <groupId>org.mybatis</groupId>
+        <artifactId>mybatis-spring</artifactId>
+        <version>2.0.6</version>
+    </dependency>
+
+    <!-- DBCP 사용하기 위해서 commons-dbcp2  -->
+    <!-- https://mvnrepository.com/artifact/org.apache.commons/commons-dbcp2 -->
+    <dependency>
+        <groupId>org.apache.commons</groupId>
+        <artifactId>commons-dbcp2</artifactId>
+        <version>2.7.0</version>
+    </dependency>
+
+    <!-- spring-jdbc(jdbc를 스프링하고 연계하기 위해서) -->
+    <!-- https://mvnrepository.com/artifact/org.springframework/spring-jdbc -->
+    <dependency>
+        <groupId>org.springframework</groupId>
+        <artifactId>spring-jdbc</artifactId>
+        <version>5.2.12.RELEASE</version>
+    </dependency>
+
+
+
+    servlet-context.xml에 추가
+
+    <!--SqlSessionFactoryBean 에서 sqlSessionFactory 얻기--> 
+    <beans:bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <beans:property name="dataSource" ref="dataSource" />
+        <beans:property name="configLocation"	 value="classpath:/mybatis/mybatis-config.xml" />
+        <beans:property name="mapperLocations" value="classpath:/mybatis/mapper/*.xml" />
+    </beans:bean>
+
+    <!-- sqlSessionFactory를 생성자 매개변수로 사용하여 sqlSession을 얻기 -->
+    <beans:bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
+    <beans:constructor-arg ref="sqlSessionFactory"/>
+    </beans:bean>	
+
+6) Spring MyBatis 연동을 Mapper 인터페이스 기반으로 설정
+
+    6.1) Mapper 인터페이스
+
+        - Mapper인터페이스는 mapping파일에 기재된 SQL을 호출하기 위한 인터페이스 이다.
+
+        - Mapper인터페이스는 Mybatis3.0 이후부터 지원하는 방식
+
+        - Mapping파일(예:member.xml)에 있는 SQL문을 자바 인터페이스를 통해 호출할 수 있도록 해준다.
+
+        - SQL문의 id의 값은 Mapper인터페이스에 메소드명과 일치해야 한다.
+    
+        6.3) Mapper 인터페이스 와 Class 방식 각각의 장단점
+
+    6.2.1) Class 
+
+            1. 장점
+
+                - 쿼리문 실행 전에 넣어줄 매개변수와 쿼리 결과값의 변형을 정의할 수 있다.
+
+                - Namespace를 내 마음대로 둘 수 있다.
+
+                - .xml 파일의 쿼리문 id와 mapper 메소드명을 일치시킬 필요가 없다.
+
+            2. 단점
+
+                - Sqlsession 객체를 주입받아야 하며, 쿼리문 실행 시 항상 호출해야 한다.
+
+                - 쿼리문 호출 시 sqlsession에 .xml 파일의 namespce와 쿼리문 id를 매개변수로 넘겨야한다.
+
+
+
+    6.2.2) Mapper 인터페이스
+
+            1. 장점
+
+                - 메소드의 내부 구현이 불필요하다.
+
+                - Sqlsession 객체 주입이 불펼요하다.
+
+                - .xml 파일의 쿼리문 id와 mapper 메소드 명이 일치한다.
+
+            2. 단점
+
+                - .xml의 Namespace가 실제 Mapper.java 위치를 가르켜야 한다.
+
+                - 메소드 내부 정의가 불가능하다.
+    
+    6.3) Mapper 인터페이스 사용법
+
+        1. servlet-context.xml
+
+                - mybatis-spring:scan 으로 범위를 지정 하여 @Mapper 어노테이션을 찾아 처리한다.
+
+            <mybatis-spring:scan base-package="kr.or.nextit" 
+                        annotation="org.apache.ibatis.annotations.Mapper" />    
+        2. 인터페이스 생성
+
+            package kr.or.nextit.free.mapper;
+            @Mapper
+            public interface IFreeBoardMapper {
+                String getFreeBoardKey();
+            }
+
+        3. xml 작성 
+
+            -  namespace 와 인터페이스에 선언된 메서드명(getFreeBoardKey) 과 일치해야 한다.
+
+            <mapper namespace="kr.or.nextit.free.mapper.IFreeBoardMapper">
+                    
+            <select id="getFreeBoardKey" resultType="string">
+                SELECT 
+                    'B01-'
+                    ||TO_CHAR(SYSDATE, 'YYYY') 
+                    || '-'
+                    ||LPAD ( (select count(bo_no)+1 from free_board) , 6, '0') AS bo_no 
+                FROM DUAL
+            </select>
+
+
+    7) 부모 context에서 자식 context 컨트롤러 접근 제한
+
+        - context-common.xml
+
+            <context:component-scan base-package="kr.or.nextit">
+                    <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+                </context:component-scan>
+                            
+                
+        - servlet-context.xml
+
+            <context:component-scan base-package="kr.or.nextit" use-default-filters="false">
+                    <context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+                </context:component-scan>
+​
+
+    8) 기능별로 분리하여 부모 context 등록하여  공유 하기
+
+        8.1)  mapper 
+
+            - context-mapper.xml
+
+                <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+                    <property name="dataSource" ref="dataSource" />
+                    <property name="configLocation"	 value="classpath:/mybatis/mybatis-config.xml" />
+                    <property name="mapperLocations" value="classpath:/mybatis/mapper/*.xml" />
+                </bean>
+
+                <mybatis-spring:scan base-package="kr.or.nextit" annotation="org.apache.ibatis.annotations.Mapper" />
+        
+
+        8.2)  dataSource 
+
+            - db.properties
+
+                #oracle
+                db.driverClassName=oracle.jdbc.driver.OracleDriver
+                db.url=jdbc:oracle:thin:@127.0.0.1:1521:xe
+                db.username=jsp
+                db.password=oracle
+                db.defaultAutoCommit=true
+
+
+                #mysql
+                #db.driverClassName=com.mysql.jdbc.Driver
+                #db.url=jdbc:mysql://localhost:3306/mysql
+                #db.username=jsp
+                #db.password=mysql
+                #db.defaultAutoCommit=true
+
+
+            - context-datasource.xml
+
+                <context:property-placeholder location="classpath:/config/db.properties"/>	
+
+                <bean id="dataSource"		class="org.apache.commons.dbcp2.BasicDataSource" destroy-method="close">
+                    <property name="driverClassName" value="${db.driverClassName}" />
+                    <property name="url" value="${db.url}" />
+                    <property name="username" value="${db.username}" />
+                    <property name="password" value="${db.password}" />
+                    <property name="defaultAutoCommit" value="${db.defaultAutoCommit}" />
+                </bean>                           
+
