@@ -1,0 +1,87 @@
+pom.xml
+
+	<dependency>
+	    <groupId>org.apache.logging.log4j</groupId>
+	    <artifactId>log4j-api</artifactId>
+	    <version>2.17.1</version>
+	</dependency>
+	<dependency>
+	    <groupId>org.apache.logging.log4j</groupId>
+	    <artifactId>log4j-core</artifactId>
+	    <version>2.17.1</version>
+	</dependency>
+	<dependency>
+	    <groupId>org.apache.logging.log4j</groupId>
+	    <artifactId>log4j-slf4j-impl</artifactId>
+	    <version>2.15.0</version>
+	</dependency>
+
+    
+log4j2.xml
+
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN">
+  <Appenders>
+    <Console name="Console" target="SYSTEM_OUT">
+      <PatternLayout pattern="%d{yyyy-MM-dd hh:mm:ss} [ %C , line : %L , Method : %M ] : %m%n"/>
+    </Console>
+    
+	<RollingFile name ="LogToFile01">
+		<FileName>E:/etc/log4j2/mylog.log</FileName>
+		<FilePattern>E:/etc/log4j2/%d{yyyy-MM-dd-hh-mm}/mylog.zip</FilePattern>
+		<PatternLayout>
+		    <Pattern>%d{yyyy-MM-dd hh:mm:ss} [ %C , line : %L , Method : %M ] : %m%n</Pattern>
+		</PatternLayout>
+		<Policies>
+			<!-- 일반적으로 1일마다 롤링을 하지만, 로그 파일이 롤링되는 테스트 결과를 확인을 위해서 1분마다 생성되도록 설정 
+				%d{yyyy-MM-dd-hh-mm}.log.zip	interval = 1	 1분마다 롤링
+				%d{yyyy-MM-dd-hh}.log.zip	interval = 1	 1시간마다 롤링
+				%d{yyyy-MM-dd}.log.zip	interval = 1	 1일마다 롤링
+			-->
+		    <TimeBasedTriggeringPolicy interval = "1" modulate = "true"/>
+        </Policies>
+	</RollingFile>
+    
+    
+  </Appenders>
+  
+  
+  <Loggers>
+  
+<!--  kr.or.nextit.code 패키지 하위는 로그 레벨을 info 으로 설정하고  additivity="false"는 다른 것들과 중첩되지 않게 출력하기-->
+    <!-- <Logger name="com.foo.Bar" level="trace"> -->
+    <Logger name="kr.or.nextit.code" level="info" additivity="false">
+      <AppenderRef ref="Console"/>
+<!-- 적용할 AppenderRef 추가하기 -->
+      <AppenderRef ref="LogToFile01"/>
+    </Logger>
+
+<!--  플젝 전체를 info레벨로 로그 출력하기   -->
+	<Logger name="kr.or.nextit" level="info" additivity="false">
+		<AppenderRef ref="Console"/>	
+	</Logger>
+
+
+	<logger name="org.springframework.core" level="info">
+		<AppenderRef ref="Console"/>
+	</logger>
+	
+	<logger name="org.springframework.beans" level="info">
+		<AppenderRef ref="Console"/>
+	</logger>
+	
+	<logger name="org.springframework.context" level="info">
+		<AppenderRef ref="Console"/>
+	</logger>
+
+	<logger name="org.springframework.web" level="info">
+		<AppenderRef ref="Console"/>
+	</logger>
+
+
+    <Root level="error">
+      <AppenderRef ref="Console"/>
+    </Root>
+
+  </Loggers>
+</Configuration>
