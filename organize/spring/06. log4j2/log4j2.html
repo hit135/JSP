@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        /*
+    log4j2 
+
+        1) 개요
+
+            로그(log)는 소프트웨어의 이벤트를 기록하는 것으로써, 소프트웨어의 동작상태를 파악하고 문제가
+
+                발생했을 때 이 동작 파악을 통해서 소프트웨어의 문제를 찾아내고 해결하기 위해 디자인 되었다. 
+
+    ​
+
+        2) 로깅 프레임워크 종류
+
+            2.1) log4j 
+
+                - log4j는 가장 오래된 로깅 프레임워크로써 Apache의 Java기반 로깅 프레임 워크이다. 콘솔 및 파일 
+
+                    출력의 형태로 로깅을 도와주며 xml, properties로 환경을 구성할 수 있다. 현재는 2015년 기준으로 
+
+                    개발이 중단되었다.
+
+            2.2) logback
+
+                - logback이란 log4j 이후에 출시된 보다 향상되고 가장 널리 사용되고 있는 Java 로깅 프레임워크중 
+
+                    하나이다. 
+
+            2.3) log4j2
+
+                - log4j의 다음 버전이다. logback처럼 필터링 기능과 자동 리로딩을 지원한다. logback과의 가장 큰 
+
+                    차이는 Multi Thread 환경에서 비동기 로거(Async Logger)의 경우 다른 로깅 프레임워크보다 
+
+                    처리량이 훨씬 많고, 대기 시간이 훨씬 짧다 
+
+    ​
+
+        3) 출시 순서 
+
+            - log4j -> logback  -> log4j2 
+
+    
+
+        4)slf4j
+
+                - slf4j는 Simple Logging Facade For Java의 약자로써 자체적인 로킹 프레임워크가 아니고 
+
+                    logger 추상체로써 다른 로깅 프레임워크가 접근할 수 있도록 도와주는 추상화 계층이다. 
+
+                    즉, logback이나 log4j2와 같은 로킹 프레임워크의 인터페이스의 역할을 해준다. 따라서 slf4j2를 
+
+                    이용하면 코드를 일정하게 유지하면서 구현체의 전환을 통해 다른 로깅 프레임워크로의 전환을 쉽고 
+
+                    간단하게 할 수 있다. 
+
+
+    ​
+    ​
+
+        6) Log Level
+
+            6.1) 개요
+
+                - Log4j 2는 FATAL, ERROR, WARN, INFO, DEBUG, TRACE의 Log Level을 제공한다.
+
+                - 각각 trace(), debug(), info(), warn(), error(), fatal()라는 로깅 메서드를 이용해 출력할 수 있다.
+
+                - 로그 레벨은 다음과 같다. (FATAL > ERROR > WARN > INFO > DEBUG > TRACE)
+
+                - 결론적으로 DEBUG 를 level로 선언했다면 DEBUG 이상의 것들 (FATAL, ERROR, WARN, INFO
+
+                    , DEBUG)의 log를 표출하는것이다. 
+
+                    
+
+            6.2) 로그 레벨 설명
+
+            - FATAL : 아주 심각한 에러가 발생한 상태를 나타냄. 시스템적으로 심각한 문제가 발생해서 어플리케이션 
+
+                    작동이 불가능할 경우가 해당하는데, 일반적으로는 어플리케이션에서는 사용할 일이 없음.
+
+            - ERROR : 요청을 처리하는중 문제가 발생한 상태를 나타냄.
+
+            - WARN : 처리 가능한 문제이지만, 향후 시스템 에러의 원인이 될 수 있는 경고성 메시지를 나타냄.
+
+            - INFO : 로그인, 상태변경과 같은 정보성 메시지를 나타냄.
+
+            - DEBUG : 개발시 디버그 용도로 사용한 메시지를 나타냄.
+
+            - TRACE : 디버그 레벨이 너무 광범위한 것을 해결하기 위해서 좀더 상세한 상태를 나타냄.
+
+
+        */
+
+    </script>    
+</body>
+</html>
