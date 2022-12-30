@@ -1,0 +1,160 @@
+pom.xml
+
+	<!-- https://mvnrepository.com/artifact/org.aspectj/aspectjrt -->
+	<dependency>
+		<groupId>org.aspectj</groupId>
+		<artifactId>aspectjrt</artifactId>
+		<version>1.9.6</version>
+		<!-- <scope>runtime</scope> -->
+	</dependency>
+
+	<!-- https://mvnrepository.com/artifact/org.aspectj/aspectjweaver -->
+	<dependency>
+		<groupId>org.aspectj</groupId>
+		<artifactId>aspectjweaver</artifactId>
+		<version>1.9.6</version>
+		<!-- <scope>runtime</scope> -->
+	</dependency>
+					
+	<!-- https://mvnrepository.com/artifact/org.springframework/spring-aop -->
+	<dependency>
+		<groupId>org.springframework</groupId>
+		<artifactId>spring-aop</artifactId>
+		<version>5.2.12.RELEASE</version>
+	</dependency> 
+
+
+context-aop.xml
+
+<bean id="xmlAspect" class="kr.or.nextit.common.aop.XmlAspect"></bean> 
+
+
+<!--aop:config expression 적용 예시
+	execution( * aspects.trace.demo.*.*(..))" 
+		* : Any return type
+		package : aspects.trace.demo
+		* : class
+		* : method
+		(..) : Any type and number of arguments	
+
+	execution( * hello(..))
+		hello 라는 이름을 가진 메서드를 선정한는 것이며 모든 파라미터를 허용한다.
+		
+	executino( * hello())
+		파라미터 패턴이 ()으로 되어 있으니 hello 메서드 중에서 파라미터가 없는 것만 선택한다.
+		
+	execution( * myspring.user.service.UserServiceImpl.*(..))
+		myspring.user.service.UserServiceImpl 클래스를 직접 지정하여 이 클래스가 가진 모든 메서드를 선택한다.
+
+	execution( * myspring.user.service.*.*(..))
+		myspring.user.service 패키지의 모든 클래스에 적용된다 하지만 서브 패키지의 클래스는 포함되지 않는다.
+		
+	execution( * myspring.user.service..*.*(..))
+		myspring.user.service 패키지의 모든 클래스에 적용된다  그리고 '..'을 사용해서 서브 패키지의 모든 클래스 까지 포함 된다.
+	
+	execution( * *..Target.*(..))
+		패키지에 상관없이 Target이라는 이름의 모든 클래스에 적용된다. 따라서 다른 패키지에 같은 이름의 클래스가 있어도 적용된다.
+ -->	
+<!--<aop:config>
+		<aop:pointcut id="getPointcut" expression="execution(public * kr.or.nextit.member.service.*.*(..))"/>
+		 <aop:aspect ref="xmlAspect">
+			<aop:before method="beforeLog" pointcut-ref="getPointcut" />
+		</aop:aspect>
+		<aop:aspect ref="xmlAspect">
+			<aop:before method="afterLog" pointcut-ref="getPointcut" />
+		</aop:aspect>
+	</aop:config>   
+	-->
+<!-- <aop:config>
+		<aop:pointcut id="getPointcut" expression="execution(public * kr.or.nextit.member.service.*.*(..))"/>
+		<aop:aspect ref="xmlAspect">
+			<aop:around method="aroundLog" pointcut-ref="getPointcut" />
+		</aop:aspect>
+	</aop:config> -->  
+	
+	 
+
+<!--@Aspect 어노테이션이 적용된 Bean을 Aspect으로 사용하기 위해서 -->	
+<aop:aspectj-autoproxy/>	
+
+​
+
+servelt-context.xml
+
+     - <context:component-scan/> 을 부모 자식으로 분리하여 사용하였다면  자식에도 아래 코드 추가하기
+
+	<aop:aspectj-autoproxy/>
+​
+
+
+AnnotationAspect.java
+
+
+/*@Before */
+/*@Before("execution(public * kr.or.nextit.*.service.*.*(..))")
+	public void beforeLog(JoinPoint joinPoint) {
+		String targetClass = joinPoint.getTarget().getClass().getSimpleName();
+		String targetMethod = joinPoint.getSignature().getName();
+		
+		logger.info("[ "+targetClass+"_"+targetMethod +" ] 호출 되었습니다." );
+		logger.info("[ "+targetClass+"_"+targetMethod +"_parameter"+ Arrays.toString(joinPoint.getArgs()));
+	}*/
+
+/*@After */
+	/*@After("execution(public * kr.or.nextit.*.service.*.*(..))")
+	public void afterLog(JoinPoint joinPoint) {
+		String targetClass = joinPoint.getTarget().getClass().getSimpleName();
+		String targetMethod = joinPoint.getSignature().getName();
+	
+		logger.info("@After [ " +  targetClass+"_"+targetMethod +" ] 가 종료되었습니다." );
+	}*/
+	
+/*@AfterReturning */
+	/*@AfterReturning(pointcut="execution(public * kr.or.nextit.*.service.*.*(..))", returning = "ret")
+	public void afterReturning(JoinPoint joinPoint, Object ret) {
+		String targetClass = joinPoint.getTarget().getClass().getSimpleName();
+		String targetMethod = joinPoint.getSignature().getName();
+		
+		logger.info("@AfterReturning [ " +  targetClass+"_"+targetMethod +" ] 리턴갑 : "+ ret );
+		logger.info("@AfterReturning [ " +  targetClass+"_"+targetMethod +" ] 가 종료되었습니다." );
+	}*/
+	
+	
+	
+/*@AfterThrowing*/
+	/*@AfterThrowing(pointcut="execution(public * kr.or.nextit.*.service.*.*(..))", throwing = "ex")
+	public void afterReturning(JoinPoint joinPoint, Throwable ex) {
+		String targetClass = joinPoint.getTarget().getClass().getSimpleName();
+		String targetMethod = joinPoint.getSignature().getName();
+
+		logger.info("@AfterReturning [ " +  targetClass+"_"+targetMethod +" ] 메서드  실행 중 예외 발생" );
+		logger.info("@AfterReturning [ " +  targetClass+"_"+targetMethod +" ] 예외  : "+ ex.getMessage() );
+	}*/
+	
+
+	
+/*@Around 앞뒤로 호출하기 */
+	
+	@Around( "execution(public * kr.or.nextit.login.*.*(..)) || execution(public * kr.or.nextit.member.*.*(..))||execution(public * kr.or.nextit.free.*.*(..))" )
+	public Object aroundLog(ProceedingJoinPoint joinPoint) {
+		
+		String targetClass = joinPoint.getTarget().getClass().getSimpleName();
+		String targetMethod = joinPoint.getSignature().getName();
+		
+		logger.info("[ "+targetClass+"_"+targetMethod +" ] 호출 되었습니다." );
+		logger.info("[ "+targetClass+"_"+targetMethod +"_parameter"+ Arrays.toString(joinPoint.getArgs()));
+		
+		long startTime = System.currentTimeMillis();
+		
+		Object result = null;
+		
+		try {
+			result = joinPoint.proceed();
+		} catch (Throwable e) {
+			e.printStackTrace();
+		}finally {
+			long finishTime = System.currentTimeMillis();
+			logger.info("[ "+targetClass+"_"+targetMethod +"실행시간 :" + (finishTime-startTime)+" ms" );
+		}
+		return result;
+	}
