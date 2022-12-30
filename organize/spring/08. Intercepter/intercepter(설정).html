@@ -1,0 +1,63 @@
+NextITRoleCheckIntercepter.java
+
+//인터셉터 적용하기1			HandlerInterceptorAdapter 상속받기
+public class NextITRoleCheckIntercepter extends HandlerInterceptorAdapter{
+	private static final Logger logger = LoggerFactory.getLogger(NextITRoleCheckIntercepter.class);
+	
+//인터셉터 적용하기2			preHandle 재정의하기
+	@Override
+	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
+			throws Exception {
+
+		HttpSession session = request.getSession();
+		MemberVO member = (MemberVO) session.getAttribute("memberVO");
+		
+		if(member == null) {
+			logger.info("(NextITRoleCheckIntercepter_preHandle) member is null");
+			response.sendRedirect(request.getContextPath()+"/login/none");
+			return false;
+		}
+		
+		List<UserRoleVO> userRoleList = member.getUserRoleList();
+		
+		for(UserRoleVO vo : userRoleList) {
+			if("AD".equals(vo.getUserRole())) {
+				return true;
+			}
+		}
+		
+		logger.info("(NextITRoleCheckIntercepter_preHandle) Your Role is not Admin");
+		response.sendError(403);
+		return false;
+	}
+}
+
+
+
+servlet-context.xml
+
+	<interceptors>
+		<!--member interceptor  -->
+		<interceptor>
+			<!--방법1  exclude-mapping 사용
+			<mapping path="/member/*"/>
+			<exclude-mapping path="/member/memberRegister"/>
+			<exclude-mapping path="/member/memberView"/>
+			<exclude-mapping path="/member/memberEdit"/>
+			<exclude-mapping path="/member/memberModify"/>
+			<exclude-mapping path="/member/memberDelete"/>
+			  -->
+			<!--방법2  필요한것들만 맵핑-->
+			<mapping path="/member/memberList"/> 
+			<mapping path="/member/memberMultiDelete"/> 
+			<mapping path="/member/memberRole"/> 
+			<mapping path="/member/memberRoleUpdate"/> 
+			<beans:bean  class="kr.or.nextit.common.util.NextITRoleCheckIntercepter"></beans:bean>
+		</interceptor>
+
+		<!--freeBoard interceptor  -->
+		<interceptor>
+			<mapping path="/free/freeHide"/>
+			<beans:bean  class="kr.or.nextit.common.util.NextITRoleCheckIntercepter"></beans:bean>
+		</interceptor>
+	</interceptors>
