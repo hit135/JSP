@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        /*
+
+        AOP
+
+        1) 개요
+
+                - AOP는 Aspect Oriented Programming의 약자로 관점 지향 프로그래밍이라고 불린다. 
+
+                        관점 지향은 쉽게 말해 어떤 로직을 기준으로 핵심적인 관점, 부가적인 관점으로 나누어서 보고 
+
+                        그 관점을 기준으로 각각 모듈화하겠다는 것이다. 
+
+                - 예로들어 핵심적인 관점은 결국 우리가 적용하고자 하는 핵심 비즈니스 로직이 된다. 또한 부가적인 
+
+                        관점은 로깅, 시큐리티, 트랜잭션 등이 있다.
+
+        ​
+
+
+        단순 주 업무 호출 
+
+        ​
+
+        ​
+
+
+        AOP ( 관점지향 프로그래밍 )
+
+        2) AspectJ
+
+                - AspectJ는 자바코드에서 동작하는 모든 객체에 대해 완벽한 AOP 솔루션 제공을 목표로 하는 기술이다. 
+
+                    성능이 뛰어나고 기능이 매우 강력하지만 그만큼 Spring AOP에 비해 사용방법이나 내부 구조가 
+
+                    훨씬 더 복잡하다. 
+
+        ​
+
+        3) Spring AOP
+
+                - Spring AOP는 프로그래머가 직면하는 일반적인 문제 해결을 위해 Spring IoC에서 제공하는
+
+                    간편한 AOP 기능이다. 
+
+        ​
+
+        ​
+
+        4) Spring AOP에서 사용되는 용어들
+
+            4.1) Aspect 
+
+                    -  여러 객체에 공통적으로 적용되는 관심 사항을 Aspect라고 합니다.
+
+            4.2) Advice 
+
+                    -  대상 객체의 Jointpoint에 Weaving되어 동작할 수 있는 코드를 의미합니다.
+
+            4.3) Pointcut 
+
+                    - Joinpoint의 정규 표현식, Joinpoint가 Pointcut에 일치할 때마다 항상 Pointcut에 
+
+                        관련된 Advice가 실행됩니다.
+
+            4.4) Joinpoint 
+
+                    - 프로그램이 실행 중일 때 발생하는 메서드 실행, 생성자 호출, 필드 값 변경과 같은 
+
+                        특수한 지점을 의미합니다.
+
+            4.5) Weaving
+
+                    - Aspect 를 대상 객체에 연결시켜 관점지향 객체로 만드는 과정을 의미합니다.  Advice를 비즈니스 
+
+                        로직 코드에 삽입 하는 것을 의미합니다.
+
+        ​
+
+        5) Advice 종류
+
+            5.1) Before : 비즈니스 메소드 실행 전 동작
+
+            5.2) After : 비즈니스 메소드가 실행된 후,  !무조건!  실행
+
+                                (예를들면 try~catch 블록에서 finally 부분에 해당!)
+
+            5.3) After Returning : 비즈니스 메소드가 성공적으로 리턴되면 동작
+
+                                (단, 메소드 내부에 리턴값이 존재하는 경우)
+
+            5.4) After Throwing : 비즈니스 메소드 실행 중, 예외가 발생하면 동작
+
+                                (예를들면 try~catch 블록의 catch 부분에 해당!)
+
+            5.5) Around : 메소드 호출 자체를 가로채서 비즈니스 메소드 실행 전&후 모두에 처리할 
+
+                                        로직을 삽입할 수 있음
+
+        ​
+
+        6) Spring AOP의 구현 방식
+
+            6.1 ) XML 기반의 POJO 클래스를 이용한 AOP 구현
+
+                        - 부가기능을 제공하는 Advice 클래스를 작성한다.
+
+                        - XML 설정 파일에 <aop:config>를 이용해서 애스펙트를 설정한다.
+
+            6.2 ) @Aspect 어노테이션을 이용한 AOP 구현
+
+                        - @Aspect 어노테이션을 이용해서 부가기능을 제공하는 Aspect 클래스를 작성한다.
+
+                        - XML 설정 파일에 <aop:aspectj-autoproxy />를 설정한다.
+
+        */
+
+
+    </script>
+</body>
+</html>
