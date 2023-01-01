@@ -1,0 +1,27 @@
+context-transaction.xml
+
+<!--트랜젝션 적용하기1-->
+		<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+			<property name="dataSource" ref="dataSource" />
+		</bean>
+		
+<!--트랜젝션 적용하기2 -->
+		<tx:annotation-driven transaction-manager="transactionManager"/>
+
+        
+MemberServiceImpl.java
+
+//트랜젝션 적용하기3		
+	@Transactional
+	@Override
+	public void updateUserRole(String memId, String[] roles) {
+		memMapper.deleteUserRole(memId);
+		if(roles !=null && roles.length >0 ) {
+			System.out.println("roles.length :"+ roles.length);
+			for(int i=0; i<roles.length; i++) {
+				//memMapper.insertMultiRole(memId, roles[i]);			
+                //memId를 null으로 하여 강제로 예외발생시키기
+                memMapper.insertMultiRole(null, roles[i]); 
+			}
+		}
+	}
