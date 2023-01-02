@@ -1,0 +1,45 @@
+pom.xml
+
+	<!--hibernate.validator -->
+	<!-- https://mvnrepository.com/artifact/org.hibernate.validator/hibernate-validator -->
+	<dependency>
+		<groupId>org.hibernate.validator</groupId>
+		<artifactId>hibernate-validator</artifactId>
+		<version>6.2.0.Final</version>
+	</dependency>
+
+
+loginController.java
+
+    @RequestMapping("/login/join")
+	public String join(Model model, @ModelAttribute("member") MemberVO member) {
+
+
+join.jsp
+
+    <form:form name="loginForm"  method="post" modelAttribute="member">
+  	     <form:input path="memId" autocomplete="off"/>
+		 <form:errors path="memId"></form:errors>       
+    </form:form>  
+
+
+MemberVO
+
+    @Pattern(regexp = "^\\w{4,10}$" , message="아이디는 4~10자로 입력해주세요" , groups = MemberRegister.class)
+	private String memId; 
+
+    
+MemberController.java
+
+@RequestMapping(value="/member/memberRegister", method=RequestMethod.POST)
+public String memberRegister( @Validated(value = MemberRegister.class) 
+              @ModelAttribute("member") MemberVO member
+              , BindingResult error
+              , Model model) {
+        
+          if(error.hasErrors()) {
+			return "/login/join";
+		}
+
+		return "/member/memberRegister";
+	} 

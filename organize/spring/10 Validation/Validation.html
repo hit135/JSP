@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        /*
+    검증(Validation)
+
+        1) 개요
+
+                - 애플리케이션 개발을 진행할 때 검증은 가장 중요한 작업이다.
+
+                - Client의 데이터는 조작이 쉬울 뿐더러 모든 데이터가 정상적인 방식으로 들어오는 것도 아니기 
+
+                        때문에, Client Side뿐만 아니라 Server Side에서도 데이터 유효성을 검사해야 할 필요가 있습니다.
+
+    ​
+
+        2) Jakarta Bean Validation
+
+            - validation을 위해 Java에서는 Jakarta Bean Validation라는 Specification을 이용할 수 있습니다.
+
+            - Jakarta Bean Validation은 인터페이스로 된 명세일 뿐이고 실제 동작할 수 있도록 구현한 것이 
+
+                    Hibernate Validator이다.
+
+    ​
+
+        3) Hibernate Validator   
+
+            - Jakarta Bean Validation 는 명세이기 때문에 따로 구현체를 연결해서 사용하고 있고,
+
+                    Hibernate Validator 를 기본으로 사용하고 있습니다.
+
+            - Hibernate Validator만 추가해주어도, Jakarta Bean Validation API 에 대한 의존성이 추가가 됩니다.
+
+            - Jakarta Bean Validaton 2.0의 대한 버전은 hibernate-validator는 6버전입니다.
+
+    ​
+
+        4) Validation 적용방법
+
+            1. 검사 내용을 VO에 작성
+
+            2. Validation을 적용하고 싶은 곳에  @Validated() 붙이기+ 검사결과 객체 
+
+            3. 검사 실패했을 때의 메세지 JSP에서 보여주기.
+
+            4. 경우에 따라 그룹화가 필요하면  groups를 사용하여 검사하기   
+
+    ​
+
+        5) 스프링 form태그
+
+            - 스프링 form태그( form:form)를 사용하면 사용자가 잘못입력한 값들 또는 입력하지 않은 값들에 
+
+                    대한 검증을 어노테이션으로 쉽게 처리할 수 있다.
+
+            - 스프링 form태그( form:form)를 사용하여 회원가입을 처리하였을때 만약에 사용자가 회원가입 
+
+                    처리도중 누락된 데이터로 회원가입이 실패할 경우 기존에 작성한 데이터가 모두 지는 것이 아니고 
+
+                    데이터를 유지 시켜준다
+
+            - 스프링 form태그( form:form)를 사용하면 사용자가 잘못 입력한 데이터 또는 누락한 데이터에 
+
+                    대한 알림(form:error)을 쉽게 처리할 수있다.
+
+
+        */
+
+    </script>
+</body>
+</html>
