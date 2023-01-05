@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        /*
+        
+    파일  
+
+        1) 파일 업로드 개요
+
+            - 우리가 사용하는 request 기본 객체가 제공하는 기능만으로는 파일 업로드를 처리할 수 없다.
+
+            -  HTTP의 데이터 전송 방식은 크게 GET방식과 POST방식이 존재하는데 GET방식은 파라미터를 
+
+                URL으로 전송하고 POST는 요청 몸체(body)에 전송한다. 따라서 파일 전송은 GET 방식
+
+                (URL으로 파라미터를 보낼수 있는 크기가 제한있음) 으로 처리할수 없으므로 POST방식으로 
+
+                처리 해야 한다
+
+    ​
+
+        2) 파일 업로드 인코딩 방식
+
+            2.1) 개요 
+
+                - 스트림 기반의 전송 방식인 POST 방식은 다시 다음 두가지 인코딩 방식에 따라 전송하는 데이터 
+
+                        형식이 달라진다.
+
+    ​
+
+            2.2) POST 방식 인코딩 종류 
+
+                    1. application/x-www-form-urlencoded
+
+                            - 기본값으로, 모든 문자들은 서버로 보내기 전에 인코딩됨을 명시함
+
+                    2. multipart/form-data 
+
+                            - 모든 문자를 인코딩 하지 않음을 명시함, 파일 또는 이미지를 서버로 전송할때 사용
+
+    ​
+
+            2.3) 파일 업로드 인코딩 방식
+
+                - 파일을 전송하기 위해서는 multipart/form-data 인코딩을 사용해야 한다 
+
+                        (enctype="multipart/form-data")
+
+    ​
+
+        3) 파일 업로드 처리 방식
+
+            - 서블릿 2.5버전까지는 개발자가 직접 multipart/form-data 방식을 처리하는 코드를 작성하거나 
+
+                    Commons FileUplad API 와 같은 라이브러리를 이용해서 파일 업로드를 처리 해야 했다. 
+
+    ​
+
+            - 서블릿 3.0버전에는 파일 업로드를 위한 AP(Part 인터페이스)I가 추가되었다 따라서 서블릿 3.0 
+
+                    부터는  Commons FileUpload API와 같은 라이브러리 등을 사용하지 않고도 파일 업로드를 처리할 
+
+                    수 있다.
+
+    ​
+
+            - 스프링은 MultipartFile 인터페이스를 사용하여 파일을 편리하게 처리할 수 있다.
+
+    ​
+
+        4) 파일 업로드 처리 방법
+
+            - 방법1 : 파일을 특정 디렉토리에 업로드하고 해당 파일의 디렉토리 경로를 디비에 넣어놓기
+
+            - 방법2 : 파일을 바이너리로 변경해서 디비에 넣기 ( 디비 과부하 발생 할 수 있음)
+
+    ​
+
+        5) 파일 업로드 필수 3가지 
+
+            - input type ="file"
+
+            - form 태그에 method="post"
+
+            - form 태그에 enctype="multipart/form-data"
+
+    ​
+
+        6) 파일 업로드  권고사항
+
+            - 파일 업로드 위치는 프로젝트와  다른 디렉토리에 업로드 하기
+
+            - 파일명은 다르게 변경 되어 업로드 되어야 하며 난독화 되어야 한다
+
+
+        */
+
+
+    </script>
+</body>
+</html>
