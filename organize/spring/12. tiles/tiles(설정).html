@@ -1,0 +1,76 @@
+pom. xml
+
+<!-- https://mvnrepository.com/artifact/org.apache.tiles/tiles-jsp -->
+<dependency>
+   <groupId>org.apache.tiles</groupId>
+   <artifactId>tiles-jsp</artifactId>
+   <version>3.0.8</version>
+</dependency>
+
+
+
+servlet-context.xml
+
+<!--Tiles를 사용하기 위한 UrlBasedViewResolver 뷰리저설정(spring-webmvc-XXX.jar에 속함)  -->	
+	<beans:bean class="org.springframework.web.servlet.view.UrlBasedViewResolver">
+		<beans:property name="viewClass" value="org.springframework.web.servlet.view.tiles3.TilesView"/>
+		<!-- 찾는 순위가 1순위 -->
+		<beans:property name="order" value="1"/>
+	</beans:bean>
+	
+<!--Tiles를 사용하기 위한 지시서 정보 맵핑-->	
+	<beans:bean class="org.springframework.web.servlet.view.tiles3.TilesConfigurer">
+		<beans:property name="definitions" value="/WEB-INF/spring/tiles/tiles.xml"/>
+	</beans:bean>
+	
+
+
+
+tiles.xml
+
+<!--tiles 설정-->
+<tiles-definitions>
+  <definition name="myapp.homepage" template="/layouts/classic.jsp">
+	<put-attribute name="title" value="Tiles tutorial homepage" />
+	<put-attribute name="header" value="/tiles/banner.jsp" />
+	<put-attribute name="menu" value="/tiles/common_menu.jsp" />
+	<put-attribute name="body" value="/tiles/home_body.jsp" />
+	<put-attribute name="footer" value="/tiles/credits.jsp" />
+  </definition>
+</tiles-definitions>
+​
+
+
+
+basicLayout.jsp
+
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+    
+<!--tiles 가 제공하는 태그라이브러리 사용하기   -->
+<%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles"%>	 
+    
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+
+<!--tiles 레이아웃 작성하기  -->
+<div id="wrap">
+	<div class="header">
+		header영역 
+	</div>
+
+	<div>본문입니다.</div>
+	
+	<div class="footer">
+		footer영역 
+	</div>
+</div>
+ 
+</body>
+</html>
+​
