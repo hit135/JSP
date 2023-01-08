@@ -1,0 +1,154 @@
+pom.xml
+
+<!-- https://mvnrepository.com/artifact/org.springframework.security/spring-security-web -->
+<dependency>
+	<groupId>org.springframework.security</groupId>
+	<artifactId>spring-security-web</artifactId>
+	<version>5.3.13.RELEASE</version>
+</dependency>
+
+<!-- https://mvnrepository.com/artifact/org.springframework.security/spring-security-config -->
+<dependency>
+	<groupId>org.springframework.security</groupId>
+	<artifactId>spring-security-config</artifactId>
+	<version>5.3.13.RELEASE</version>
+</dependency>
+
+<!-- https://mvnrepository.com/artifact/org.springframework.security/spring-security-taglibs -->
+<dependency>
+	<groupId>org.springframework.security</groupId>
+	<artifactId>spring-security-taglibs</artifactId>
+	<version>5.3.13.RELEASE</version>
+</dependency>
+​
+
+
+
+context-security.xml_1차
+
+<bean id="passwordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"/> 
+
+<security:authentication-manager> 
+	<security:authentication-provider>
+		<security:jdbc-user-service data-source-ref="dataSource"/>
+		<security:password-encoder  ref="passwordEncoder"  /> 
+	</security:authentication-provider> 
+</security:authentication-manager>
+
+
+
+
+web.xml
+
+<filter>
+	<filter-name>springSecurityFilterChain</filter-name>
+	<filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+</filter>
+<filter-mapping>
+	<filter-name>springSecurityFilterChain</filter-name>
+	<url-pattern>/*</url-pattern>
+</filter-mapping>  
+
+
+
+
+context-security.xml_2차
+
+    <security:http pattern="/images/**" security="none"/>
+	<security:http pattern="/css/**" security="none"/>
+	<security:http pattern="/member/memberRegister" security="none"/>
+	<security:http pattern="/member/profilePhoto" security="none"/>	
+
+    <security:http>
+        <security:intercept-url pattern="/member/**" access="hasRole('ROLE_ADMIN')" />
+		<security:intercept-url pattern="/free/**" access="hasAnyRole('ROLE_MANAGER', 'ROLE_ADMIN')" />
+		<security:intercept-url pattern="/home" access="hasAnyRole('ROLE_USER','ROLE_MANAGER','ROLE_ADMIN')" />
+		<security:intercept-url pattern="/**" access="permitAll" />
+        <security:form-login />
+        <security:logout />
+        <security:access-denied-handler error-page="/common/error/error403.jsp"/>
+    </security:http>
+    
+    <security:authentication-manager>
+        <security:authentication-provider>
+            <security:user-service>
+                <security:user name="nextit11" password="$2a$10$rq/PHHonTmDjAE2ke3NweuOh25WoxiwXS9IlhsTpx9UqmFIjdBWqa" authorities="ROLE_USER" />
+				<security:user name="nextit12" password="$2a$10$rq/PHHonTmDjAE2ke3NweuOh25WoxiwXS9IlhsTpx9UqmFIjdBWqa" authorities="ROLE_USER, ROLE_MANAGER"/>
+				<security:user name="nextit13" password="$2a$10$rq/PHHonTmDjAE2ke3NweuOh25WoxiwXS9IlhsTpx9UqmFIjdBWqa" authorities="ROLE_USER, ROLE_MANAGER, ROLE_ADMIN" />
+            </security:user-service>
+			<security:password-encoder ref="passwordEncoder" />
+        </security:authentication-provider>
+    </security:authentication-manager>
+​
+
+
+
+context-security.xml_3차
+
+<bean id="customUserDetailsService" class="kr.or.nextit.common.security.CustomUserDetailsService"></bean>
+
+<security:http pattern="/images/**" security="none"/>
+<security:http pattern="/css/**" security="none"/>
+<security:http pattern="/member/memberRegister" security="none"/>
+<security:http pattern="/member/profilePhoto" security="none"/>
+
+<security:http>
+	<security:intercept-url pattern="/member/memberRole" access="hasAuthority('AD')" />
+	<security:intercept-url pattern="/member/memberRoleUpdate" access="hasAuthority('AD')" />
+	<security:intercept-url pattern="/member/memberList" access="hasAnyAuthority('EM','DI','PR','AD')" />
+	<security:intercept-url pattern="/member/memberMultiDelete" access="hasAnyAuthority('DI','PR','AD')" />
+	<security:intercept-url pattern="/member/**" access="hasAuthority('ME')" />
+	<security:intercept-url pattern="/free/**" access="hasAnyAuthority('ST','AM','MA','SM','EM','DI','PR','AD')" />
+	<security:intercept-url pattern="/home" access="hasAuthority('ME')" /> 
+	<security:intercept-url pattern="/**" access="permitAll" />
+	
+	<security:form-login
+		login-page="/login"
+		login-processing-url="/login/loginCheck"
+		default-target-url="/home"
+		username-parameter="memId"
+		password-parameter="memPass"
+		authentication-failure-url="/login/fail"
+	/>
+	<security:logout 
+		logout-url="/logout" 
+		logout-success-url="/login" 
+		delete-cookies="JSESSIONID"	
+	/>
+	<security:csrf disabled="true" />
+</security:http>
+
+<security:authentication-manager>
+	<security:authentication-provider user-service-ref="customUserDetailsService">
+		<security:password-encoder ref="passwordEncoder" />			
+	</security:authentication-provider>
+</security:authentication-manager>
+
+<!--참고
+	hasAuthority() or hasAnyAuthority() : 특정 권한을 가지는 사용자만 접근할 수 있다.
+	login-page="/login"
+		-> 시큐리티에서 제공하는 로그인 페이지가 아닌 플젝에서 사용하는 로그인 페이지로 설정
+	login-processing-url="/login/loginCheck" 
+		-> /login/loginCheck 요청이 발생하면 스프링시큐리티가 해당 요청을 가로채서 수행함   
+			(즉, /login/loginCheck 요청은 실행되지 않음)
+	default-target-url="/home"
+		-> 사용자가 로그인 성공시 기본적으로 요청되는 url
+	username-parameter="memId"
+		-> 사용자 아이디 전달되는 값은 로그인 폼에서 지정한 memId
+	password-parameter="memPass"
+		-> 사용자 패스워드 전달되는 값은 로그인 폼에서 지정한 memPass
+	authentication-failure-url="/login/fail"
+		-> 사용자가 로그인 실패시 요청되어지는 url		
+	logout-url="/logout" 
+		-> 로그아웃 처리될 url	
+	logout-success-url="/login" 
+		-> 로그아웃 성공하면 리다이렉트 될 url
+	delete-cookies="JSESSIONID"	
+		-> 로그아웃 성공하면 JSESSIONID 쿠키제거
+		
+	<security:csrf disabled="true" />
+		-> 	csrf 사용하지 않음을 나타내는 옵션(사용하는것을 권장하지만 수업에서는 사용하지 않음)
+	
+	user-service-ref
+		-> 사용자 인증을 커스텀하여 처리 하고자할때 해당 커스텀 빈 등록	 
+-->
