@@ -1,0 +1,158 @@
+<web-app xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee
+                      http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
+  version="4.0"
+  metadata-complete="true">
+
+<welcome-file-list>
+	<welcome-file>index.jsp</welcome-file>
+</welcome-file-list>
+
+
+	<!--추가01 	스프링이 제공하는 필터를 사용하여 UTF-8인코딩처리  -->
+	<filter>
+	    <filter-name>encodingFilter</filter-name>
+	    <filter-class>
+	        org.springframework.web.filter.CharacterEncodingFilter
+	    </filter-class>
+	    <init-param>
+	        <param-name>encoding</param-name>
+	        <param-value>UTF-8</param-value>
+	    </init-param>
+	    <init-param>
+	        <param-name>forceEncoding</param-name>
+	        <param-value>true</param-value>
+	    </init-param>
+	</filter>
+	<filter-mapping>
+	    <filter-name>encodingFilter</filter-name>
+	    <url-pattern>/*</url-pattern>
+	</filter-mapping>
+
+	<!-- 스프링 시큐리티는 필터 기반이기 떄문에 필터 처리를 해줘야 한다 -->
+	<filter>
+		<filter-name>springSecurityFilterChain</filter-name>
+		<filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>springSecurityFilterChain</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>  
+	
+	<!-- 악의적인 코드를 막기 위한 XSS클래스 필터 -->
+	<filter>
+		<filter-name>XSSCheckFilter</filter-name>
+		<filter-class>kr.or.nextit.common.util.NextITXSSCheckFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>XSSCheckFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+	
+
+
+
+<!-- 	스프링 시큐리티(권한)를 사용하기 위해서 필터 주석처리
+	<filter>
+		<filter-name>Thrid_LoginCheckFilter</filter-name>
+		<filter-class>kr.or.nextit.common.util.NextITLoginCheckFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>Thrid_LoginCheckFilter</filter-name>
+		<url-pattern>/home/*</url-pattern>
+		<url-pattern>/free/*</url-pattern>
+		<url-pattern>/member/*</url-pattern>
+	</filter-mapping>
+
+ -->
+
+
+	<!-- The definition of the Root Spring Container shared by all Servlets and Filters -->
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<!-- <param-value>/WEB-INF/spring/root-context.xml</param-value> -->
+		<!-- <param-value>/WEB-INF/classes/spring/context-*.xml</param-value> -->
+		<param-value>classpath:/spring/context-*.xml</param-value>
+	</context-param>
+	<!-- Creates the Spring Container shared by all Servlets and Filters -->
+	<listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
+
+
+
+	<!-- Processes application requests -->
+	<servlet>
+		<servlet-name>appServlet</servlet-name>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		<init-param>
+			<param-name>contextConfigLocation</param-name>
+			<param-value>/WEB-INF/spring/appServlet/servlet-context.xml</param-value>
+		</init-param>
+		<load-on-startup>2</load-on-startup>
+		<!--스프링 multipart 관련 설정  -->
+		<multipart-config>
+			<max-file-size>31457280</max-file-size>	<!-- 30MB, 한개 파일 크기 -->  
+			<max-request-size>1004857600</max-request-size> <!-- 100MB, 전체 요청 크기 -->
+		</multipart-config> 
+	</servlet>
+		
+	<servlet-mapping>
+		<servlet-name>appServlet</servlet-name>
+		<url-pattern>/</url-pattern>
+	</servlet-mapping>
+
+	<!-- 서블렛 2 -->
+	<servlet>
+		<servlet-name>NextITApiServlet</servlet-name>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		<init-param>
+			<param-name>contextConfigLocation</param-name>
+			<param-value>/WEB-INF/spring/appServlet/apiServlet-context.xml</param-value>
+		</init-param>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>NextITApiServlet</servlet-name>
+		<url-pattern>*.do</url-pattern>
+	</servlet-mapping>
+
+
+	<!-- 리퀘스트를 리스너로 등록했기 때문에 프로젝트에서 리퀘스트를 끌어 쓸 수 있다 -->
+	<listener>
+		<listener-class>
+			org.springframework.web.context.request.RequestContextListener
+		</listener-class>
+	</listener>
+
+
+
+	
+	<!--400-->
+	<error-page>
+		<error-code>400</error-code>
+		<location>/common/error/error400.jsp</location>
+	</error-page>
+	<!--403-->
+	<error-page>
+		<error-code>403</error-code>
+		<location>/common/error/error403.jsp</location>
+	</error-page>
+	<!--404-->
+	<error-page>
+		<error-code>404</error-code>
+		<location>/common/error/error404.jsp</location>
+	</error-page>
+	<!--500-->
+	<error-page>
+		<error-code>500</error-code>
+		<location>/common/error/error500.jsp</location>
+	</error-page> 
+	<!--Throwable-->
+	<error-page>
+		<exception-type>java.lang.Throwable</exception-type>
+		<location>/common/error/errorThrowable.jsp</location>
+	</error-page>
+
+</web-app>

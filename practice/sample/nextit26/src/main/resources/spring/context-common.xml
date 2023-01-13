@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.3.xsd">
+	
+	<!-- Root Context: defines shared resources visible to all other web components -->
+		
+		<!-- @Controller를 제외하고 모두 @ 자동 등록할 것이다 -->
+		<!-- 요청 > 컨트롤러 > 서비스 > 다오 흐름을 깨지 않기 위해 -->
+		<context:component-scan base-package="kr.or.nextit">
+			<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+		</context:component-scan>
+		
+		<!-- appConfig 설정 경로 잡아주기 -->
+		<!-- <util:properties id="util" location="Web-Inf~~~ 로 써도 된다/config/appConfig.properties" /> -->
+		<util:properties id="util" location="classpath:/config/appConfig.properties" />
+		
+		<!-- 번외로 db.properties를 #{[]} 방법으로 가져오기 -->
+		<util:properties id="dbInfo" location="classpath:/config/db.properties" />
+		
+		
+		
+</beans>

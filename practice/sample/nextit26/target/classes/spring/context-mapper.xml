@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:mybatis-spring="http://mybatis.org/schema/mybatis-spring"
+	xsi:schemaLocation="http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring-1.2.xsd
+		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd">
+	
+	<!-- Root Context: defines shared resources visible to all other web components -->
+		
+	<!-- Spring의 sqlFactoryBean >> jsp의 sqlFactoryBuilder을 대신함 -->
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<!-- <beans:property name="mapperLocations" value="classpath*:sample/config/mappers/**/*.xml" /> -->
+		<property name="mapperLocations" value="classpath:/mybatis/mapper/*.xml"/>
+		<property name="configLocation" value="classpath:/mybatis/mybatis-config.xml"/>
+		<!-- 밑의 주석은 여러 db를 쓸 때 사용 -->
+		<!-- <beans:property name="databaseIdProvider" ref="databaseIdProvider" /> -->
+	</bean>
+
+	<!-- sqlSession 얻기 -->
+	<!-- 이거 왜 지워도 되지? -->
+	<!-- 	
+	<bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
+		<constructor-arg ref="sqlSessionFactory"/>
+	</bean> 
+	-->
+
+	<!-- @Mapper을 사용하기 위해 mybatis-spring 등록 -->
+	<mybatis-spring:scan base-package="kr.or.nextit" annotation="org.apache.ibatis.annotations.Mapper"/>
+		
+		
+		
+		
+</beans>

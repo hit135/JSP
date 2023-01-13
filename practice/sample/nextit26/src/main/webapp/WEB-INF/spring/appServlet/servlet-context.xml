@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns="http://www.springframework.org/schema/mvc"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:beans="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mybatis-spring="http://mybatis.org/schema/mybatis-spring"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd
+		http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring-1.2.xsd
+		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd">
+
+	<!-- DispatcherServlet Context: defines this servlet's request-processing 
+		infrastructure -->
+
+	<!-- Enables the Spring MVC @Controller programming model spring mvc @Controller에 
+		요청을 보내기 위해 필요한 HandlerMapping과 HandlerAdapter를 Bean으로 등록합니다. HandlerMapping 
+		: HTTP요청 정보를 이용해서 컨트롤러를 찾아주는 기능 HandlerAdapter : HandlerMapping을 통해 찾은 컨트롤러를 
+		직접 실행하는 기능을 수행합니다. -->
+	<annotation-driven />
+
+	<!-- Handles HTTP GET requests for /resources/** by efficiently serving 
+		up static resources in the ${webappRoot}/resources directory -->
+	<!-- 요청처리 -->
+	<resources mapping="/resources/**" location="/resources/" />
+	<resources mapping="/images/**" location="/images/" />
+	<resources mapping="/css/**" location="/css/" />
+	<resources mapping="/js/**" location="/js/" />
+	<resources mapping="/realgrid/**" location="/realgrid/" />
+	<resources mapping="/smarteditor2-2.8.2.3/**" location="/smarteditor2-2.8.2.3/" />
+
+	<!-- Resolves views selected for rendering by @Controllers to .jsp resources 
+		in the /WEB-INF/views directory -->
+	<beans:bean
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<beans:property name="prefix" value="/WEB-INF/views/" />
+		<beans:property name="suffix" value=".jsp" />
+		<beans:property name="order" value="2"></beans:property>
+	</beans:bean>
+
+
+	<!--context:component-scan : 지정한 패키지에 @이 붙은 클래스를 찾아서 객체화(빈 등록) 해줌 -->
+	<!-- 흐름 제어를 위해 기존과 다르게 쓸 것이다 -->
+	<!-- use-default-filters >> 기본값이 true, true인 경우 
+				@Component, @Service, @repository, @Controller같은 어노테이션을 자동으로 등록 처리 -->
+	<context:component-scan base-package="kr.or.nextit" use-default-filters="false">
+		<!-- @Controller 처리 -->
+		<context:include-filter type="annotation" 
+			expression="org.springframework.stereotype.Controller"/>
+	</context:component-scan>
+	
+
+	<!-- aop 어노테이션을 사용하겠다! -->
+	<aop:aspectj-autoproxy/>
+	
+<!-- 	스프링 시큐리티 권한을 위해 주석처리함 (인터쎕터)
+	<interceptors>
+		<interceptor>
+			 <mapping path="/member/memberList"/>
+			 <mapping path="/member/memberMultiDelete"/>
+			 <mapping path="/member/memberRole"/>
+			 <mapping path="/member/memberRoleUpdate"/>
+			 <beans:bean class="kr.or.nextit.common.util.NextITRoleCheckIntercepter"></beans:bean>
+		</interceptor>
+		
+		
+		freeboard
+		<interceptor>
+			<mapping path="/free/freeHide"/>
+			<beans:bean class="kr.or.nextit.common.util.NextITRoleCheckIntercepter"></beans:bean>
+		</interceptor>
+		
+		
+	</interceptors>
+	 -->
+	 
+	<!-- 스프링 컨트롤러가 파일을 받을 수 있도록 Resolver 등록 -->
+	<beans:bean id="multipartResolver" 
+	class="org.springframework.web.multipart.support.StandardServletMultipartResolver"/>
+	
+	<!-- tiles를 사용하기 위한 ViewResolver 등록 -->
+	<!-- 리저버 설정  >> 스프링의 ViewResolver 사용-->
+	<beans:bean class="org.springframework.web.servlet.view.UrlBasedViewResolver">
+		<beans:property name="viewClass" value="org.springframework.web.servlet.view.tiles3.TilesView"/>
+		<beans:property name="order" value="1"></beans:property>
+	</beans:bean>
+	
+	<!-- tiles를 어떻게 쓰겠다 설정하는 지시서 -->
+	<beans:bean class="org.springframework.web.servlet.view.tiles3.TilesConfigurer">
+		<beans:property name="definitions" value="/WEB-INF/spring/tiles/tiles.xml"/>
+	</beans:bean>
+	
+	
+	
+</beans:beans>

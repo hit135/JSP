@@ -1,0 +1,352 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.or.nextit.member.mapper.IMemberMapper">
+
+<sql id="memberSearch">
+	<if test="searchWord != null and searchWord !='' ">
+		<choose>
+			<when test="searchType=='NM'">
+				and mem_name like '%' || #{searchWord} || '%
+			</when>
+			<when test="searchType=='ID'">
+				and mem_id like '%' || #{searchWord} || '%'
+			</when>
+			<when test="searchType=='HP'">
+				and mem_hp like '%' || #{searchWord} || '%'	
+			</when>
+		</choose>
+	</if>
+	<if test="searchJob !=null and searchJob !=''">
+		and mem_job = #{searchJob}
+	</if>
+	<if test="searchHobby !=null and searchHobby !=''">
+		and mem_hobby = #{searchHobby}
+	</if>
+</sql>
+
+<select id="getMember" parameterType="string" resultType="MemberVO">
+		SELECT 		          
+	       mem_id   
+	       ,mem_pass      
+	       ,mem_name      
+	       ,mem_bir       
+	       ,mem_zip       
+	       ,mem_add1      
+	       ,mem_add2      
+	       ,mem_hp        
+	       ,mem_mail      
+	       ,mem_job       
+	       ,mem_hobby     
+	       ,mem_mileage   
+	       ,mem_del_yn    
+	       ,mem_join_date 
+	       ,mem_edit_date 
+	FROM member           
+	WHERE mem_id = #{memId}      
+</select>
+
+
+<insert id="insertMember" 
+	parameterType="MemberVO">
+	insert into member( 			 				 		
+	     mem_id   	, mem_pass		, mem_name        
+	   , mem_bir  	, mem_zip			, mem_add1       		
+	   , mem_add2 	, mem_hp			, mem_mail       		
+	   , mem_job  	, mem_hobby		, mem_mileage  	 	 
+	   , mem_del_yn , mem_join_date , mem_edit_date  
+	)values(										 		
+	  	#{memId}		,#{memPass}		, #{memName}				 		
+	  	,#{memBir}	,#{memZip}		, #{memAdd1}	             		
+	  	,#{memAdd2}	,#{memHp}			, #{memMail}	             		
+	  	,#{memJob}	,#{memHobby}		, 0  			 		
+	  	, 'N'        , sysdate   		, sysdate		 		
+	)															
+</insert>
+
+
+<insert id="insertUserRole"
+	parameterType="MemberVO">
+		insert into member_role( 
+			user_id
+			, user_role
+			, user_role_nm
+		) values(
+		 	#{memId}
+		 	, 'ME'
+		 	,'MEMEBER'
+	 	)
+</insert>
+
+<select id="loginCheck" parameterType="MemberVO"
+	resultType="MemberVO">
+	
+ SELECT   											 				 
+      mem_id   	, mem_pass			, mem_name       	         
+    , mem_bir  	, mem_zip				, mem_add1       		 
+    , mem_add2 	, mem_hp				, mem_mail       		 
+    , mem_job  	, mem_hobby			, mem_mileage       
+    , mem_del_yn , mem_join_date 	, mem_edit_date 	          
+                                                                       
+ FROM MEMBER															
+ WHERE mem_id = #{memId} 			
+ <!-- 암호화 하고 나면 이제 비밀번호를 가져가서 서버에서 비교하자 -->											
+ <!-- AND mem_pass = #{memPass}  -->														
+ AND mem_del_yn = 'N' 													
+</select>
+
+<select id="getUserRole" parameterType="MemberVO"
+	resultType="UserRoleVO">
+	select 				
+		user_id 				
+		,user_role 			
+		,user_role_nm 		
+	from member_role 	
+	where user_id = #{memId} 	
+</select>
+
+<update id="updateMember" parameterType="MemberVO">
+	update member set	  	   	    
+	  mem_pass		=	#{memPassNew}  	   		
+	  ,mem_name		=	#{memName}      	    
+	  ,mem_bir		=	#{memBir}      		
+	  ,mem_zip		=	#{memZip}      		
+	  ,mem_add1		=	#{memAdd1}      	    
+	  ,mem_add2		=	#{memAdd2}      	    
+	  ,mem_hp			=	#{memHp}      		
+	  ,mem_mail		=	#{memMail}      	    
+	  ,mem_job		=	#{memJob}		    
+	  ,mem_hobby		=	#{memHobby}  		    
+	  ,mem_mileage	=	#{memMileage}  		    
+	  ,mem_edit_date	=	sysdate 
+	where mem_id = #{memId} 				
+</update>
+
+<update id="deleteMember" parameterType="MemberVO">
+	update member set 	
+		mem_del_yn ='Y' 	
+	where mem_id = #{memId} 		
+</update>
+
+
+<select id="getTotalRowCount"
+parameterType="MemberSearchVO"
+resultType="int">
+
+	select count(*) 		
+	from member 			
+	where mem_del_yn = 'N'
+	    
+	<!-- <if test="searchWord != null and searchWord !='' ">
+		<choose>
+			<when test="searchType=='NM'">
+				and mem_name like '%' || #{searchWord} || '%
+			</when>
+			<when test="searchType=='ID'">
+				and mem_id like '%' || #{searchWord} || '%'
+			</when>
+			<when test="searchType=='HP'">
+				and mem_hp like '%' || #{searchWord} || '%'	
+			</when>
+		</choose>
+	</if>
+	<if test="searchJob !=null and searchJob !=''">
+		and mem_job = #{searchJob}
+	</if>
+	<if test="searchHobby !=null and searchHobby !=''">
+		and mem_hobby = #{searchHobby}
+	</if> -->
+	
+	<include refid="memberSearch"></include>
+	
+	
+</select>
+
+<select id="getMemberList" 
+parameterType="MemberSearchVO"
+resultType="MemberVO">
+
+	select														
+	    c.*                                                     
+	from(                                                       
+	    select                                                  
+	          rownum as rnum                                    
+	          , b.*                                             
+	    from (   	 				                            
+	           SELECT                                        
+	               mem_id                                    
+	              <!--  ,mem_pass   -->                               
+	               ,mem_name                                 
+	               ,to_char(mem_bir,'YYYY-MM-DD') AS mem_bir 
+	               ,mem_zip                                  
+	               ,mem_add1                                 
+	               ,mem_add2                                 
+	               ,mem_hp                                   
+	               ,mem_mail     		                    
+	               ,mem_job                                  
+	               ,mem_hobby                                
+	               ,mem_mileage   	                        
+	               ,mem_del_yn                               
+	               ,mem_join_date                            
+	               ,mem_edit_date                            
+	               FROM member a                             
+	           WHERE a.mem_del_yn='N'                        
+		<!-- <if test="searchWord != null and searchWord !='' ">
+			<choose>
+				<when test="searchType=='NM'">
+					and mem_name like '%' || #{searchWord} || '%
+				</when>
+				<when test="searchType=='ID'">
+					and mem_id like '%' || #{searchWord} || '%'
+				</when>
+				<when test="searchType=='HP'">
+					and mem_hp like '%' || #{searchWord} || '%'	
+				</when>
+			</choose>
+		</if>
+		<if test="searchJob !=null and searchJob !=''">
+			and mem_job = #{searchJob}
+		</if>
+		<if test="searchHobby !=null and searchHobby !=''">
+			and mem_hobby = #{searchHobby}
+		</if> -->
+		
+		<include refid="memberSearch"></include>
+		
+		
+				 order by mem_join_date )b     
+		    order by rnum desc )c    
+		                   
+		<!-- where rnum between #{lastRow} and #{firstRow} -->                  	
+		<include refid="common.sql.rnum"></include>
+		
+</select>
+
+<select id="getRoleInfo"
+resultType="RoleInfoVO">
+	select            
+	   role_code      
+	   ,role_eng      
+	   ,role_kor      
+	 from role_info   
+</select>
+ 
+<delete id="deleteUserRole" parameterType="string">
+	  delete					
+		  from member_role		
+	  where user_id = #{memId}	  
+</delete>
+
+<insert id="insertMultiRole" parameterType="map">
+	insert into member_role(											
+	  	user_id 				                              
+	  	,user_role				                               
+	  	,user_role_nm 			                               
+	) values ( 					                            
+	  	#{memId}						                                	 
+	  	,#{role}						                                	 
+	  	,(select role_eng from role_info where role_code = #{role} ) 	     
+ 	)																	
+</insert>
+
+
+<select id="idCheck" parameterType="String" resultType="int">
+	SELECT COUNT(*)
+	  FROM member
+	 WHERE mem_id = #{memId}
+</select>
+
+<select id="getuserRoleListByUserId" parameterType="string"
+	resultType="string">
+	SELECT
+		user_role
+	FROM
+		member_role
+	WHERE
+		user_id = #{username}
+</select>
+
+<insert id="memberExcelUpload">
+	insert into member( 			 				 
+	     mem_id   	, mem_pass		, mem_name       
+	   , mem_bir  	, mem_zip		, mem_add1       
+	   , mem_add2 	, mem_hp		, mem_mail       
+	   , mem_job  	, mem_hobby		, mem_mileage  	 
+	   , mem_del_yn , mem_join_date , mem_edit_date  
+	)values(										 
+	  	#{memId}		, #{memPass}	, #{memName}				 
+	  	, #{memBir}		, #{memZip}		, #{memAdd1}	             
+	  	, #{memAdd2}	, #{memHp}		, #{memMail}	             
+	  	, #{memJob}		, #{memHobby}	, #{memMileage}  			 
+	  	, #{memDelYn}   , #{memJoinDate}, #{memEditDate}		 
+	)	
+
+</insert>
+
+
+<update id="memberGridUpdate" parameterType="MemberVO">
+	update member set  	   	     	
+	  mem_name		 	 =	#{memName}      	     	
+	  ,mem_hp		 	 =	#{memHp}      		
+	  ,mem_job		 	 =	#{memJob}		   
+	  ,mem_hobby	 	 =	#{memHobby}  		   
+	  ,mem_mileage	 =	#{memMileage}  		   
+	 where mem_id = #{memId}           
+</update>
+
+
+<update id="memberGridMultiDelete">
+	UPDATE member
+	SET
+		mem_del_yn = 'Y'
+	WHERE
+		mem_id = #{memId}
+</update>
+
+<select id="getMailAuth" parameterType="String" resultType="MailAuthVO">
+	select 
+		mail, auth_key
+		, is_auth
+	from mail_auth
+	where mail = #{mail}
+</select>
+
+<insert id="insertMailAuth" parameterType="String">
+	insert into mail_auth ( 
+		mail
+		,auth_key
+		,is_auth
+	 )values(
+	 	#{mail}
+	 	,#{authKey}
+	 	,0
+	 )
+</insert>
+
+<update id="updateMailAuth" parameterType="String">
+	update mail_auth 
+		set auth_key = #{authKey}
+	where mail = #{mail}
+</update>
+
+<update id="completeAuth" parameterType="String">
+	update mail_auth 
+		set is_auth=1 
+	where mail=#{mail}
+</update>
+
+<select id="checkMailAuth" parameterType="string" resultType="int">
+	select 
+	    count(*) 
+	from 
+		mail_auth
+	where 
+		mail = #{memMail}
+		and is_auth = 1
+</select>
+
+
+
+</mapper>
+

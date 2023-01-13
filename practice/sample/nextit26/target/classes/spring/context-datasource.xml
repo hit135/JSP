@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
+	
+	<!-- Root Context: defines shared resources visible to all other web components -->
+	
+	<!-- 정보 설정 -->
+	<context:property-placeholder location="classpath:/config/db.properties"/>
+	
+	<!-- 정보 가져오기 -->
+	<!-- ${설정해둔 프로퍼티} -->
+	
+	<!-- name을 쓰는 이유는 setName 메소드가 있기 때문이다 -->
+	<!-- 	
+	여기서 쓰는 ${db.driverClassName}는 환경설정에서만 쓸 수 있지만
+	#{[]}는 java에서도 쓸 수 있다
+	 <bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource" destroy-method="close">
+	 	<property name="driverClassName" value="${db.driverClassName}"/>
+	 	<property name="url" value="${db.url}"/>
+	 	<property name="username" value="${db.username}"/>
+	 	<property name="password" value="${db.password}"/>
+		<property name="defaultAutoCommit" value="${db.defaultAutoCommit}"/>
+	 </bean>
+	 -->
+	<bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource" destroy-method="close">
+	 	<property name="driverClassName" value="#{dbInfo['db.driverClassName']}"/>
+	 	<property name="url" value="#{dbInfo['db.url']}"/>
+	 	<property name="username" value="#{dbInfo['db.username']}"/>
+	 	<property name="password" value="#{dbInfo['db.password']}"/>
+		<property name="defaultAutoCommit" value="#{dbInfo['db.defaultAutoCommit']}"/>
+	 </bean>
+	
+	
+		
+</beans>

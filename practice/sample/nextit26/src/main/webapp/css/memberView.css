@@ -1,0 +1,271 @@
+
+/* ===================================1�� header �۾� e */
+
+.intro_bg{
+    width: 100%;
+    height: 700px;
+    background-color: sienna;
+}
+.intro_text{
+    width: 100%;
+    background-color: lightcoral;
+    text-align: center;
+    position: relative;
+    top: 300px;
+}
+.intro_bg{
+    background-image: url("../images/img102.jpg");
+    background-size: 100% 700px;
+}
+.intro_text{
+    background-color: transparent;
+}
+.intro_text > h1, .intro_text > h4 {
+    color: #fff;
+}
+/* =========================2�� intro_bg e */
+
+/* ��ü������� */
+.contents{
+    width: 100%;
+    /* height: 700px; */
+    background-color: lightslategrey;
+}
+/* ����� ������� */
+.content01{
+    width: 1280px;
+    /* height: 700px; */
+    height: 100%;
+    background-color: lightgreen;
+}
+.content01_h1{
+    width: 100%;
+    height: 100px;
+    background-color: lightpink;
+    text-align: center;
+}
+.content01_h1 > h1{
+    padding-top: 30px;
+}
+/* ���̺� ������� */
+#div_table{
+    width: 1280px;
+    /* height: 500px; */
+    height: 100%;
+    background-color: lightsalmon;
+}
+#div_table td{
+    padding: 10px;
+}
+#div_table .td_left{
+    text-align: center;
+}
+.div_button{
+    width: 1280px;
+    height: 100px;
+    background-color: lightseagreen;
+}
+
+.div_button input{
+    padding: 5px;
+    border: none;
+    border-radius: 5px;
+    margin-left: 10px;
+}
+.div_button{
+    text-align: right;
+}
+
+/* ��ư �׼��߰� */
+.div_button > input:active{
+    transform:translate(2px,2px);
+}
+
+.contents, .content01, .content01 > div, #div_table, .div_button{
+    background-color: #fff;
+}
+/* ===============================================3�� contents �۾� e */
+
+/* css�и��ϱ�02  style�±� �ȿ� �����Ѱ� �ٿ��ֱ�*/ 
+/* modal css */
+#modal_div1{
+	width: 100%;
+	height: 100%;
+	position: fixed; 
+	top: 0; right: 0; bottom: 0; left: 0;
+	background-color: rgba(0,0,0,0.4);	
+	z-index: 1;
+	display: none;
+}
+#modal_div2{
+	width: 400px;
+	height: 200px;
+	background-color: lightgrey;
+	text-align: center;
+	position: fixed;
+	left: calc(50% - 200px);
+	top: calc(50% - 200px);
+}
+#modal_div2 > p {
+	margin-top: 50px;
+}
+#modal_div2 > a {
+	margin-left: 300px;
+}
+form[name="deleteForm"]{
+	width: 350px;
+    height: 350px;
+    /* background-color: tomato; */
+    margin-top: 20px;
+}
+.int-area{
+    width: 300px;
+    height: 150px;
+    /* background-color: lightblue; */ 
+}
+.int-area:first-child{
+	padding-top: 40px;
+}
+.int-area input{
+    width: 80%;
+    padding: 30px 10px 10px;
+    background-color: transparent;
+    border: none;
+    border-bottom: 1px solid #999;
+    font-size: 18px;
+    color: #fff;
+}
+.btn-area > button{
+    width: 40%;
+    height: 40px;
+    color: #fff;
+    font-size: 20px;
+    border: none;
+    border-radius: 15px;
+    background-color: lightpink;
+    position: relative;
+    top: -50px
+}
+/* ��ưŬ���׼� */
+.btn-area > button:active{
+	color: gray;
+}
+
+/* �̹����ҷ�����04-2 			�����ʻ��� css ������*/
+#div_table{
+	text-align: center;
+}
+#div_table img{
+  	width: 300px;
+  	height: 250px;
+}
+
+/* modal css */
+#modal_div1{
+	width: 100%;
+	height: 100%;
+	position: fixed; 	
+	top: 0; right: 0; bottom: 0; left: 0;
+	background-color: rgba(0,0,0,0.4);	
+	z-index: 1;
+	display: none;
+}
+#modal_div2{
+	width: 400px;
+	height: 200px;
+	background-color: lightgrey;
+	text-align: center;
+	position: fixed;
+	left: calc(50% - 200px);
+	top: calc(50% - 200px);
+}
+#modal_div2 > p {
+	margin-top: 50px;
+}
+#modal_div2 > a {
+	margin-left: 300px;
+}
+form[name="deleteForm"]{
+	width: 350px;
+    height: 350px;
+    /* background-color: tomato; */
+    margin-top: 20px;
+}
+.int-area{
+    width: 300px;
+    height: 150px;
+    /* background-color: lightblue; */ 
+}
+.int-area:first-child{
+	padding-top: 40px;
+}
+.int-area input{
+    width: 80%;
+    padding: 30px 10px 10px;
+    background-color: transparent;
+    border: none;
+    border-bottom: 1px solid #999;
+    font-size: 18px;
+    color: #fff;
+}
+.btn-area > button{
+    width: 40%;
+    height: 40px;
+    color: #fff;
+    font-size: 20px;
+    border: none;
+    border-radius: 15px;
+    background-color: lightpink;
+    position: relative;
+    top: -50px
+}
+.btn-area > button:active{
+	color: gray;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

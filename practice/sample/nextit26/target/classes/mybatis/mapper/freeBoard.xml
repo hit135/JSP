@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="kr.or.nextit.free.mapper.IFreeMapper">
+	
+<sql id="freeBoardSearch">
+	<if test="searchWord != null and searchWord !=''">
+		<choose>
+			<when test='searchType=="T"'>
+				and bo_title like '%' || #{searchWord} || '%'	
+			</when>	 			
+			<when test='searchType=="W"'>
+				and bo_writer like '%' || #{searchWord} || '%'
+			</when>	 			
+			<when test='searchType=="C"'>
+				and bo_content like '%' || #{searchWord} || '%'
+			</when>	 			
+		</choose>
+	</if>
+	<if test="searchCategory != null and searchCategory !=''">
+		and bo_category = #{searchCategory}
+	</if>	
+</sql>
+	
+<select id="getFreeBoardKey" resultType="string">
+	SELECT 
+	    'B01-'
+	    ||TO_CHAR(SYSDATE, 'YYYY') 
+	    || '-'
+	    ||LPAD ( (select count(bo_no)+1 from free_board) , 6, '0') AS bo_no 
+	FROM DUAL
+</select>
+
+<insert id="insertBoard" parameterType="FreeBoardVO">
+	INSERT INTO free_board (    
+		bo_no         				
+	   , bo_title    				
+	   , bo_category        	 
+	   , bo_writer   			 
+	   , bo_pass     			 
+	   , bo_content         	 
+	   , bo_ip         		 
+	   , bo_hit      			 
+	   , bo_reg_date        	 
+	   , bo_del_yn	    			
+	) VALUES  (                 
+	     #{boNo}  			         
+	   , #{boTitle}     			         
+	   , #{boCategory}  			         
+	   , #{boWriter}                        
+	   , #{boPass}                          
+	   , #{boContent}                       
+	   , #{boIp}                   			
+	   , 0							
+	   , sysdate           		
+	   , 'N'				     
+	)                           
+</insert>
+
+
+<select id="getTotalRowCount" parameterType="FreeBoardSearchVO"
+	resultType="int">
+	select 
+		count(*) 		
+	from free_board 		
+	where bo_del_yn = 'N'
+	<include refid="freeBoardSearch"></include>
+</select>
+
+
+<select id="getBaordList" parameterType="FreeBoardSearchVO"
+	resultType="FreeBoardVO">
+
+	select																			
+	    d.*                                                                         
+	from(                                                                           
+	    select                                                                      
+	        rownum as rnum                                                          
+	        ,c.*                                                                    
+	    from (                                                                      
+	        select  				                                                  
+	           bo_no   				                                              
+	          ,bo_title 			                                                  
+	          ,bo_category   		                                                  
+	          ,bo_writer 			                                                  
+	          ,bo_pass    			                                              
+	          ,bo_content 			                                              
+	          ,bo_ip    			                                                  
+	          ,bo_hit 				                                              
+	          ,to_char(bo_reg_date, 'YYYY-MM-DD') as bo_reg_date   	              
+	          ,to_char(bo_mod_date, 'YYYY-MM-DD') as bo_mod_date 	                  
+	          ,bo_del_yn 			                                                  
+	          ,bo_del_id 			                                                  
+	          ,bo_del_date 			                  				              
+	          ,b.comm_nm  as bo_category_nm  						                  
+	        from free_board a, comm_code b						                  
+	        where a.bo_category = b.comm_cd						                  
+	        and a.bo_del_yn = 'N'                    
+		<include refid="freeBoardSearch"></include> 
+		         order by bo_no ) c    
+	     order by rnum desc ) d
+	 <include refid="common.sql.rnum"></include>	
+</select>
+
+<select id="getBoard" parameterType="string"
+	resultType="FreeBoardVO">
+	select  				                            
+	 bo_no   				                            
+	,bo_title 			                            
+	,bo_category   		                            
+	,bo_writer 			                            
+	,bo_pass    			                            
+	,bo_content 			                            
+	,bo_ip    			                            
+	,bo_hit 				                            
+	,to_char(bo_reg_date, 'YYYY-MM-DD') as bo_reg_date
+	,to_char(bo_mod_date, 'YYYY-MM-DD') as bo_mod_date
+	,bo_del_yn 			                            
+	,bo_del_id 			                            
+	,bo_del_date 			                            
+	,b.comm_nm  as bo_category_nm 	                
+	from free_board a, comm_code b	                
+	where a.bo_category = b.comm_cd	                
+	and a.bo_no= #{boNo}					                
+</select>
+
+
+<update id="increaseHit" parameterType="string">
+	update free_board set 	
+	bo_hit = bo_hit+1 		
+	where bo_no = #{boNo}	
+</update>
+
+
+<update id="updateBoard" parameterType="FreeBoardVO">
+	 UPDATE free_board SET              
+	      bo_title      = #{boTitle}             
+	    , bo_category   = #{boCategory}             
+	    , bo_content    = #{boContent}             
+	    , bo_ip         = #{boIp}             
+	    , bo_mod_date   = sysdate       
+	 WHERE bo_no        = #{boNo}             
+</update>
+
+
+<update id="deleteBoard" parameterType="FreeBoardVO">
+	UPDATE free_board SET         	
+		bo_del_yn = 'Y'             	
+		,bo_del_id = #{boWriter}                 
+		,bo_del_date = sysdate         
+	WHERE bo_no = #{boNo}       		   
+</update>
+
+
+<select id="checkAdmin" parameterType="FreeBoardVO" 
+	resultType="int">
+	SELECT 
+		COUNT(*) 
+	FROM MEMBER_ROLE 
+	WHERE USER_ID =#{boWriter} 
+	and USER_ROLE='AD'
+</select>
+
+</mapper>

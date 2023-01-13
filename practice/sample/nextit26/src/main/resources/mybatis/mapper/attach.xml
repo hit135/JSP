@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.or.nextit.attach.mapper.IAttachMapper">
+
+<insert id="insertAttach">
+	INSERT INTO attach (
+		atch_no
+		,atch_parent_no
+		,atch_category
+		,atch_file_name
+		,atch_original_name
+		,atch_file_size
+		,atch_convert_size
+		,atch_content_type
+		,atch_path
+		<!-- ,atch_down_hit -->
+		<!-- ,atch_del_yn -->
+		,atch_reg_id
+		,atch_reg_date
+	) VALUES (
+		seq_attach.nextval
+		,#{atchParentNo}
+		,#{atchCategory}
+		,#{atchFileName}
+		,#{atchOriginalName}
+		,#{atchFileSize}
+		,#{atchConvertSize}
+		,#{atchContentType}
+		,#{atchPath}
+		<!-- ,#{atchDownHit} -->
+		<!-- ,#{atchDelYn} -->
+		,#{atchRegId}
+		,sysdate
+	)
+</insert>
+
+
+<select id="getAttachList" parameterType="string" 
+resultType="AttachVO">
+	SELECT
+		atch_no
+		,atch_parent_no
+		,atch_category
+		,atch_file_name
+		,atch_original_name
+		,atch_file_size
+		,atch_convert_size
+		,atch_content_type
+		,atch_path
+		,atch_down_hit
+		,atch_del_yn
+		,atch_reg_id
+		,atch_reg_date
+	FROM
+		attach
+	WHERE
+		atch_parent_no = #{atchParentNo}
+	AND
+		atch_category = #{atchCategory}
+</select>
+
+
+<select id="getAttach" parameterType="int" resultType="AttachVO">
+	SELECT
+		atch_no
+		,atch_parent_no
+		,atch_category
+		,atch_file_name
+		,atch_original_name
+		,atch_file_size
+		,atch_convert_size
+		,atch_content_type
+		,atch_path
+		,atch_down_hit
+		,atch_del_yn
+		,atch_reg_id
+		,atch_reg_date
+	FROM
+		attach
+	WHERE
+		atch_no = #{atchNo}
+</select>
+
+<update id="increaseDownHit">
+	UPDATE
+		attach
+	SET
+		atch_down_hit = atch_down_hit + 1
+	WHERE
+		atch_no = #{atchNo}
+</update>
+
+<delete id="deleteAttaches" parameterType="map">
+	DELETE FROM attach
+	WHERE 1=1
+	<!-- 
+		마이바티스에서 포이치문
+		collection >> 전달받는 인자
+		item은 전달받은 배열을 사용할 네임 -> #{네임}
+		open은 시작 구문
+		separator는 in 안에 구분자
+		close 는 닫는 구문
+	 -->
+	<foreach collection="delAtchNos"
+				item="atchNos"
+				open="and atch_no in("
+				separator=","
+				close=")"
+	>
+		#{atchNos}
+	</foreach>
+</delete>
+
+
+<select id="getAttachNo" parameterType="map"
+	resultType="int">
+	
+	SELECT
+		a.*
+	FROM(
+		SELECT
+			atch_no
+		FROM
+			attach
+		WHERE
+			atch_parent_no = #{memId}
+		AND
+			atch_category = #{atchCategory}
+		ORDER BY atch_no DESC
+		) a
+	WHERE rownum = 1
+
+
+
+
+
+
+
+</select>
+
+
+
+</mapper>

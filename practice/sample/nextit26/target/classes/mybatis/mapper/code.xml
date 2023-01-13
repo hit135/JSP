@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.or.nextit.code.mapper.ICommCodeMapper">
+
+<select id="getCodeListByParent"
+parameterType="string" resultType="code" >
+	SELECT					
+	comm_cd					
+	,comm_nm					
+	,comm_parent				
+	,comm_ord				
+	from comm_code			
+	where comm_parent = #{commParent}	
+</select>
+
+
+
+
+
+</mapper>

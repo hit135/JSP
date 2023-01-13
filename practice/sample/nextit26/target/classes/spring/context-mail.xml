@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd">
+	
+	<!-- Root Context: defines shared resources visible to all other web components -->
+		
+	<bean id="mailSender"	class="org.springframework.mail.javamail.JavaMailSenderImpl">
+		<property name="host" value="#{util['mail.host']}" />   
+		<property name="port" value="#{util['mail.port']}" />
+		<property name="username" value="#{util['mail.username']}" />
+		<property name="password" value="#{util['mail.password']}" />
+		<property name="javaMailProperties">
+			<props>
+				<prop key="mail.transport.protocol">#{util['mail.javaMailProperties.protocol']}</prop>
+				<prop key="mail.smtp.auth">#{util['mail.javaMailProperties.auth']}</prop>
+				<prop key="mail.smtp.starttls.enable">#{util['mail.javaMailProperties.enable']}</prop>
+				<prop key="mail.debug">#{util['mail.javaMailProperties.debug']}</prop>
+				<prop key="mail.smtp.ssl.trust">#{util['mail.javaMailProperties.ssl.trust']}</prop>
+				<prop key="mail.smtp.ssl.protocols">#{util['mail.javaMailProperties.ssl.protocols']}</prop>
+			</props>
+		</property>
+	</bean>	
+		
+		
+		
+</beans>
