@@ -1,0 +1,399 @@
+@import url(https://fonts.googleapis.com/css?family=Roboto+Slab:400,700);
+/* 스크롤 바 지우기 */
+html{
+	height: 100%;
+}
+body {
+    -ms-overflow-style: none;
+    widows: 100%;
+    height: 100%;
+}
+
+#container{
+	widows: 100%;
+    height: 100%;
+}
+
+.htmlHeader{
+	height: 12%
+}
+
+::-webkit-scrollbar {
+    display: none;
+}
+
+
+/* ======================================== 메인의 gif css */
+#main_contents {
+    opacity: 1;
+    display: block;
+    transition-duration: 1.5s;
+}
+
+.main_img {
+    width: 150px;
+    margin-top: -300px;
+    text-align: center;
+    z-index: 99;
+}
+
+.main_img_div {
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    margin-left: 0;
+    margin-right: 0;
+}
+
+.main_img_div>div {
+    width: 200px;
+}
+
+.p_div_imp {
+    text-align: center;
+}
+
+/* 메인의 타이틀 css */
+#main_title {
+    justify-content: center;
+}
+
+#main_title>img {
+    width: 584px;
+    height: 121px;
+    margin-top: -200px;
+    position: absolute;
+    z-index: 100;
+    rotate: 520deg;
+    transition-duration: 1s;
+}
+
+#main_gifs {
+    opacity: 0;
+    transition-duration: 3.5s;
+}
+
+/* main 고정된 것들 */
+/* 홈페이지 버튼 */
+#title_name {
+    cursor: pointer;
+    position: absolute;
+    top: 10px;
+    margin-left: 10px;
+    opacity: 0;
+    transition-duration: 2s;
+}
+
+#title_name>img {
+    width: 150px;
+    height: 75px;
+    float: left;
+}
+
+/* 상위 버튼들 */
+#main_button>ul {
+    list-style: none;
+    font-size: 0.75em;
+    font-weight: bold;
+    font-size: 23px;
+}
+
+#main_button>ul>li {
+    cursor: pointer;
+    display: inline-block;
+    margin-left: 30px;
+    transition-duration: 2s;
+}
+
+#main_button>ul>li:hover{
+    color: rgb(224, 38, 38);
+}
+#main_button {
+    position: absolute;
+    top: 42px;
+    z-index: 200;
+    transition-duration: 1.5s;
+    right: 1500px;
+    opacity: 0;
+}
+
+/* 회원의 등급 이미지 */
+#gradeImage{
+	width: 50px;
+	height: 50px;
+}
+
+/* 바텀 바 */
+#bottom_bar {
+    position: fixed;
+    bottom: 0;
+    transition-duration: 1.5s;
+    border-top: 1px solid rgb(206, 191, 191);
+    height: 1px;
+    width: 1px;
+}
+
+/* 바텀 버튼 (로그인) */
+#bottom_button {
+    position: absolute;
+    bottom: 70px;
+    right: 0;
+    margin-right: 70px;
+    transition-duration: 2s;
+    opacity: 0;
+}
+
+.btn_login {
+    width: 200px;
+    font-size: 16px;
+    font-weight: 600;
+    color: #fff;
+    cursor: pointer;
+    margin: 20px;
+    height: 55px;
+    text-align: center;
+    border: none;
+    background-size: 300% 100%;
+
+    border-radius: 50px;
+    transition: all .4s ease-in-out;
+}
+
+.btn_login:hover {
+    background-position: 100% 0;
+    transition: all .4s ease-in-out;
+}
+
+.btn_login:focus {
+    outline: none;
+}
+
+.btn_login.color_login {
+    background-image: linear-gradient(to right, #667eea, #764ba2, #6B8DD6, #8E37D7);
+    box-shadow: 0 4px 15px 0 rgba(116, 79, 168, 0.75);
+}
+
+.btn_login.color_policy {
+    background-image: linear-gradient(to right, #f5ce62, #e43603, #fa7199, #e85a19);
+    box-shadow: 0 4px 15px 0 rgba(229, 66, 10, 0.75);
+}
+
+.btn_login.color_attendace {
+    background-image: linear-gradient(to right, #eb3941, #f15e64, #e14e53, #e2373f);  
+    box-shadow: 0 5px 15px rgba(242, 97, 103, .4);
+}
+
+
+/* 로그인 창 */
+#p_registe {
+    background-color: rgb(253, 253, 253);
+    transition-duration: 3s;
+    text-align: center;
+
+    display: flex;
+    justify-content: center;
+    width: 0;
+    height: 0;
+
+}
+
+#c_registe {
+    transition-duration: 3s;
+    background-color: white;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    text-align: center;
+
+    width: 0;
+    height: 0px;
+}
+
+
+/* 상위 버튼의 Condition */
+#exit_img{
+    position: relative;
+    top: -140px;
+    right: -595px;
+}
+#exit_img > img{
+    width: 50px;
+    height: 50px;
+    cursor: pointer;
+}
+#b_condition{
+    width: 10px;
+    height: 10px;
+    position: absolute;
+    top: 0%;
+    right: 25%;
+    display: none;
+    text-align: center;
+    background-image: url('../image/c_back.png');
+    box-shadow: 1px 1px 30px rgb(61, 60, 60);
+}
+#c_condition{
+    opacity: 0;
+    transition-duration: 2s;
+}
+#b_condition .b_cls{
+    width: 1000px;
+    height: 400px;
+    position: relative;
+    right: -150px;
+    top : 150px;
+    text-align: center;
+}
+#b_condition .b_cls > div{
+    margin-right: 20px;
+    margin-top: 20px;
+    display: inline-block;
+}
+#b_condition .b_cls > div > select, input{
+    font-size: 25px;
+    background-color: rgba(255,255,255,.5);
+    color: rgb(0, 0, 0);
+}
+#b_condition .b_cls > div > input{
+    background-color: rgba(255,255,255,.5);
+    width: 150px;
+    font-size: 25px;
+}
+#b_condition .b_cls > div > input::placeholder{
+    color: rgb(0, 0, 0);
+}
+/* 입장 버튼 css */
+#entry{
+    margin-top: 20px;
+}
+#entry > img{
+    cursor: pointer;
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+}
+
+/* police 버튼 css */
+#p_policy{
+    display: none;
+    position: relative;
+    top: 0px;
+    right: -1500px;
+    width: 1px;
+    opacity: 0;
+}
+#carouselExampleControls{
+    transition-duration: 2s;
+}
+#policyNum{
+    transition-duration: 2s;
+}
+.card-body{
+    height: 25rem;
+}
+.card{
+    background-color: AliceBlue;
+    overflow: auto;
+    width: 21rem;
+    height: 15rem;
+    margin-left: 15px;
+    margin-right: 15px;
+    display: inline-block;
+    cursor: pointer;
+}
+
+.card:hover{
+	background-color: DarkBlue;
+	color: white;
+}
+
+
+.card::-webkit-scrollbar{
+    display: block !important;
+}
+.carousel-control-prev-icon{
+    position: relative;
+    right: 180px;
+    background-image: url("../image/chevron-left.svg");
+}
+.carousel-control-next-icon{
+    position: relative;
+    left: 25px;
+    background-image: url("../image/chevron-right.svg");
+}
+
+.div_paging{
+	display: flex;
+	justify-content: center;
+}
+
+/* 모달의 상세정보 css */
+#policyModalBody{
+    background-color: #E9E9E9;
+}
+
+#policyViewBody {
+    height: 100%;
+
+}
+
+#policyViewBodyDiv {
+    font-family:'Roboto Slab', "Gill Sans", "Gill Sans MT", "Myriad Pro", "DejaVu Sans Condensed", Helvetica, Arial, sans-serif;
+    color: black;
+    margin: 0;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Based on http://www.456bereastreet.com/archive/201105/styling_ordered_list_numbers/ */
+#policyViewBodyDiv div {
+    max-width: 700px;
+    margin: 0 auto;
+    display: block;
+}
+/* #1- Larger numbers */
+#policyViewBodyDiv div ol.large-numbers {
+    counter-reset:li; /* Initiate a counter */
+    margin-left:0; /* Remove the default left margin */
+    padding-left:0; /* Remove the default left padding */
+    line-height: 1.25;
+}
+#policyViewBodyDiv div ol.large-numbers > li {
+    position:relative; /* Create a positioning context */
+    list-style:none; /* Disable the normal item numbering */
+    margin: 1rem 0 1rem 2rem;
+    padding: 0 0 0 1rem;
+}
+#policyViewBodyDiv div ol.large-numbers > li:before {
+    content:counter(li); /* Use the counter as content */
+    counter-increment:li; /* Increment the counter by 1 */
+    /* Position and style the number */
+    position:absolute;
+    top: -0.3em; /* move numbers up or down as needed */
+    left:-0.9em;
+    width: 1em;
+    text-align:center;
+    -moz-box-sizing:border-box;
+    -webkit-box-sizing:border-box;
+    box-sizing:border-box;
+    font-size: 2em;
+    font-weight: bold;
+    font-weight: 700;
+    color: #A8CABA;
+    text-shadow:
+        3px 3px 0 #838689,
+    -1px -1px 0 #838689,  
+        1px -1px 0 #838689,
+        -1px 1px 0 #838689,
+        1px 1px 0 #838689;
+}
+#policyViewBodyDiv div ol.large-numbers li:hover:before {
+    color: #EBE3AA;
+}
+
+/* 정책 상세페이지 끝! */
+
+
+

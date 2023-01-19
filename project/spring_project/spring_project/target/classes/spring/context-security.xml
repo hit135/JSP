@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:security="http://www.springframework.org/schema/security"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-5.3.xsd
+		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
+	
+	<!-- Root Context: defines shared resources visible to all other web components -->
+	
+	<bean id="passwordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"/> 
+	
+	<bean id="customUserDetailsService" class="kr.or.youth.common.security.CustomUserDetailsService"></bean>
+	
+	<!-- 관리자만이 members 페이지에 접근 가능하도록 -->
+	<!-- none 처리 -->
+	<security:http pattern="/images/**" security="none"/>
+	<security:http pattern="/css/**" security="none"/>
+	<security:http pattern="/js/**" security="none"/>
+	<security:http pattern="/main" security="none"/>
+	<security:http pattern="/gif/**" security="none"/>	
+	<security:http pattern="/realgrid/**" security="none"/>	
+
+	<!-- 어드민, 유저 있냐, 아니면 패스 올 -->
+	<security:http>
+		<security:intercept-url pattern="/members" access="hasAnyRole('ROLE_MANAGER', 'ROLE_ADMIN')" />
+		
+		
+		<!-- login-processing-url="/login/loginCheck" >> 스프링 시큐리티가 자기가 검증을 한다 -->
+		<!-- 저 url로 들어온것을 우리가 짜놓은 코드를 타는게 아닌 아~ 저기 url타는건 로그인이구나 >> 스프링 시큐리티가 스스로 검증함 -->
+		
+		<!-- 	<security:form-login
+		login-page="/login"
+		login-processing-url="/login/loginCheck"
+		default-target-url="/home"
+		username-parameter="memId"
+		password-parameter="memPass"
+		authentication-failure-url="/login/fail"
+		 -->
+		
+		<security:form-login
+			login-page="/adminLogin"
+			login-processing-url="/adminLogin/loginCheck"
+			default-target-url="/members"
+			username-parameter="memId"
+			password-parameter="memPass"
+			authentication-failure-url="/error/error403.jsp"
+		/>
+		<!-- 세션을 유지하는 값으로 JSESSIONID을 씀 -->
+		<!-- 일단 서버는 처리하지 않음.. -->
+		<security:logout 
+			logout-url="/logout" 
+			logout-success-url="/" 
+			delete-cookies="JSESSIONID"	
+		/>
+		<security:csrf disabled="true" />
+	
+	</security:http>
+	
+	
+	<security:authentication-manager>
+		<security:authentication-provider user-service-ref="customUserDetailsService">
+			<security:password-encoder ref="passwordEncoder" />			
+		</security:authentication-provider>
+	</security:authentication-manager>
+	
+	
+</beans>

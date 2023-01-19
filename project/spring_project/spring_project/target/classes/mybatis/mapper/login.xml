@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.or.youth.login.dao.ILoginDao">
+
+<!-- 멤버 등록 -->
+<!-- 멤버 sysDate에도 등록 -->
+<insert id="insertMember" parameterType="kr.or.youth.login.vo.MemberVO">
+	BEGIN	
+		INSERT INTO member (
+						MEMID,
+						MEMPASS,
+						MEMNAME,
+						MEMPOINT,
+						MEMROLE,
+						MEMJOINDATE
+							)
+		       VALUES (
+		                #{memId},
+		                #{memPass},
+		                #{memName},
+		                #{memPoint},
+		                #{memRole},
+		                SYSDATE
+		               );
+		INSERT INTO mem_sysdate (memId)
+	           VALUES (#{memId});
+	END;	               
+</insert>
+
+<!-- 멤버 가져오기 -->
+<select id="getMember" parameterType="String"
+resultType="kr.or.youth.login.vo.MemberVO">
+	SELECT * FROM MEMBER WHERE memId = #{memId}
+</select>
+
+<!-- 멤버 포인트 100 업데이트 -->
+<!-- 멤버 sysdate에 그 달과 날짜 등록 -->
+<update id="updatePoint" parameterType="String">
+	BEGIN
+		UPDATE member 
+		   SET memAttendance = SYSDATE ,
+		       memPoint = memPoint + 100
+		 WHERE memId = #{memId};
+		 
+		 UPDATE mem_sysdate
+	       SET memAttendDate = memAttendDate || TO_CHAR(SYSDATE, 'MM-DD') || ','
+	     WHERE memId = #{memId};
+	END;
+</update>
+
+
+<select id="getMemAttendDate" parameterType="string" 
+resultType="string">
+	SELECT memAttendDate FROM mem_sysdate WHERE memId = #{memId}
+</select>
+
+<!-- 스프링 시큐리티를 위한 유저 롤 리스트를 받아오기 -->
+<select id="getuserRoleListByUserId" parameterType="String"
+resultType="String">
+	SELECT
+		MEMROLE
+	FROM
+		member
+	WHERE
+		MEMID = #{username}
+</select>
+
+
+</mapper>

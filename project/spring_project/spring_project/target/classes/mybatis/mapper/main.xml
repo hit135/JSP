@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.or.youth.main.dao.IMainDao">
+
+<!-- 검색 조건들 집어넣기 -->
+<sql id="condition">
+	<!-- 취업상태 -->
+	<if test="empmSttsCn != null and empmSttsCn != '' and empmSttsCn != '없음' ">
+		AND EMPMSTTSCN LIKE '%' ||  #{empmSttsCn} || '%'
+		 OR EMPMSTTSCN = '-'
+		 OR EMPMSTTSCN LIKE '%없음'
+	</if>
+	<!-- 최종학력 -->
+	<if test="accrRqisCn != null and accrRqisCn != '' and accrRqisCn != '없음' ">
+		<choose>
+			<when test="accrRqisCn == '대학졸업'">
+				AND ACCRRQISCN LIKE '%대졸%'
+				 OR ACCRRQISCN LIKE '%대%졸업%'
+				 OR ACCRRQISCN LIKE '%졸업%대%'
+				 OR ACCRRQISCN = '-'
+				 OR ACCRRQISCN LIKE '%없음'				
+			</when>
+			<when test="accrRqisCn == '고교졸업'">
+				AND ACCRRQISCN LIKE '%고졸%'
+				 OR ACCRRQISCN LIKE '%고%졸업%'
+				 OR ACCRRQISCN LIKE '%졸업%고%'
+				 OR ACCRRQISCN = '-'
+				 OR ACCRRQISCN LIKE '%없음'	
+			</when>
+			<otherwise>
+				AND ACCRRQISCN LIKE '%' ||  #{accrRqisCn} || '%'
+				 OR ACCRRQISCN = '-'
+				 OR ACCRRQISCN LIKE '%없음'	
+			</otherwise>
+		</choose>
+	</if>
+	<!-- 출신전공 -->
+	<if test="majrRqisCn != null and majrRqisCn != '' and majrRqisCn != '없음' ">
+		AND MAJRRQISCN LIKE '%' ||  #{majrRqisCn} || '%'
+	</if>
+	<!-- 나이 판별 -->
+	<if test="ageInfo != null and ageInfo != '' ">
+		AND MIN <![CDATA[<=]]> #{ageInfo}
+		AND #{ageInfo} <![CDATA[<=]]> MAX
+	</if>
+	
+</sql>
+
+
+<!-- 청년 정책 리스트 받아오기 -->
+<select id="getPolicyList" resultType="kr.or.youth.policy.vo.YouthPolicy"
+parameterType="kr.or.youth.policy.vo.SearchVO">
+SELECT *
+FROM (SELECT rownum as rnum , a.*
+    FROM (SELECT * FROM young_policy 
+            WHERE 1=1
+			<include refid="condition"></include>
+            ORDER BY baserownum DESC)a )
+WHERE rnum between #{lastRow} and #{firstRow}
+</select>
+
+<!-- 페이징 처리를 위한 모든 row 숫자 받아오기 -->
+<select id="getTotalCount" parameterType="kr.or.youth.policy.vo.SearchVO"
+resultType="int">
+	SELECT COUNT(*) FROM young_policy
+	WHERE 1=1
+	<include refid="condition"></include>
+</select>
+
+<!-- 셀렉박스에 넣을 코드 리스트 받아오기 -->
+<select id="getSelectList" parameterType="String" resultType="kr.or.youth.policy.vo.codeVO">
+	SELECT * FROM sel_code WHERE perent_id = #{perentId}
+</select>
+
+
+<!-- 회원리스트 모두 받아오기 -->
+<select id="getMemberList" resultType="kr.or.youth.login.vo.MemberVO">
+	SELECT *
+	  FROM (SELECT a.* ,
+	               ROWNUM AS rank
+	          FROM (SELECT *
+	                  FROM member
+	                 ORDER BY memPoint DESC
+	                ) a
+	        )
+	 ORDER BY rank
+</select>
+
+</mapper>

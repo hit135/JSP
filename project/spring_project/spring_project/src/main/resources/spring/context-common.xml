@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.3.xsd">
+	
+	
+	
+	<!-- @Controller를 제외하고 모두 @ 자동 등록할 것이다 -->
+	<!-- 요청 > 컨트롤러 > 서비스 > 다오 흐름을 깨지 않기 위해 -->
+	<context:component-scan base-package="kr.or.youth">
+		<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+	</context:component-scan>
+	
+	
+	<!-- 번외로 db.properties를 #{[]} 방법으로 가져오기 -->
+	<util:properties id="dbInfo" location="classpath:/config/db.properties" />
+		
+</beans>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<settings>
+		<setting name="mapUnderscoreToCamelCase" value="true"/>   <!-- bo_no -> boNo 설정-->
+	</settings>	
+	
+	<!-- xml 경로 맨날 적기 너무 힘들다.. vo 경로를 별명지어주자 -->
+
+</configuration>
+
